@@ -1,742 +1,206 @@
 <!DOCTYPE html>
-
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#ffffff">
-<meta name="description" content="EoL Quickscan — ABT Adviseurs in Bouwtechniek. Bepaal de toekomstwaarde van uw bouwproject.">
-<title>EoL Quickscan — ABT Adviseurs in Bouwtechniek</title>
-<style>html,body{background:#fff!important;background-color:#fff!important;color:#1a1a2e!important;}</style>
+<title>EoL Quickscan — ABT</title>
+
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap");
-
 :root{
-–dk:#1a1a2e; –nv:#0f2a4a; –bl:#1a4b8c;
-–or:#e85c2a; –orh:#d44d1e;
-–wh:#ffffff; –ow:#f8f8f6; –lt:#f0efec; –md:#e2e0dc;
-–br:#d4d2ce; –brs:#b8b5af;
-–t1:#1a1a2e; –t2:#3d3d52; –t3:#6b6b80; –t4:#9898a8; –t5:#c4c4ce;
-–tl:#4dd9d0; –gr:#3ecf78;
-–gd:#2a7a4a; –gdbg:#e8f5ee; –wc:#b84a00; –wbg:#fdf0ea; –ibg:#eef3fa;
-–f1:“Source Sans 3”,system-ui,-apple-system,sans-serif;
-–f2:“Source Serif 4”,Georgia,serif;
-–f3:“JetBrains Mono”,ui-monospace,monospace;
-–r:4px; –rl:8px;
-–s1:0 1px 3px rgba(26,26,46,.07),0 4px 14px rgba(26,26,46,.05);
-–s2:0 2px 8px rgba(26,26,46,.09),0 8px 28px rgba(26,26,46,.07);
-–ez:cubic-bezier(.4,0,.2,1);
+--dark:#0f172a;
+--blue:#1e3a8a;
+--accent:#ea580c;
+--bg:#f8fafc;
+--text:#0f172a;
+--muted:#64748b;
+--border:#e2e8f0;
 }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;background:#fff;}
-body{font-family:var(–f1);background:#fff;color:var(–t1);min-height:100vh;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-
-/* LAYOUT */
-#app{display:flex;flex-direction:column;min-height:100vh;}
-.w{max-width:860px;margin:0 auto;padding:0 24px;}
-
-/* UTILITY BAR */
-.ub{background:var(–dk);border-bottom:1px solid rgba(255,255,255,.07);}
-.ui{display:flex;align-items:center;justify-content:space-between;height:34px;max-width:1280px;margin:0 auto;padding:0 24px;}
-.ul{display:flex;align-items:center;gap:16px;}
-.ul a{font-size:11.5px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .15s;}
-.ul a:hover{color:rgba(255,255,255,.8);}
-.us{width:1px;height:12px;background:rgba(255,255,255,.12);}
-.bt{font-size:10px;font-weight:600;letter-spacing:.08em;color:#fff;background:var(–or);padding:2px 7px;border-radius:2px;}
-
-/* HEADER */
-.sh{background:#fff;border-bottom:2px solid var(–dk);position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(26,26,46,.07);}
-.hw{display:flex;align-items:center;height:68px;gap:0;}
-.la{display:flex;align-items:center;padding-right:22px;border-right:1px solid var(–br);margin-right:20px;flex-shrink:0;}
-.la img{height:40px;width:auto;display:block;}
-.ti{display:flex;flex-direction:column;justify-content:center;}
-.tn{font-size:13.5px;font-weight:700;color:var(–t1);line-height:1.2;letter-spacing:.01em;}
-.ts{font-size:11px;color:var(–t4);margin-top:1px;}
-.hs{flex:1;}
-.cb{display:flex;align-items:center;gap:9px;padding:6px 13px;border:1px solid var(–br);border-radius:var(–r);background:var(–ow);}
-.cs{width:20px;height:20px;flex-shrink:0;}
-.ct{font-size:11px;line-height:1.3;color:var(–t3);}
-.ct strong{display:block;font-size:11.5px;font-weight:600;color:var(–t2);}
-
-/* STEP BAR */
-.sb{background:var(–ow);border-bottom:1px solid var(–br);display:none;}
-.sb.on{display:block;}
-.sw{display:flex;align-items:stretch;height:46px;position:relative;}
-.si{display:flex;align-items:center;gap:9px;flex:1;padding:0 14px;font-size:12px;font-weight:500;color:var(–t5);border-right:1px solid var(–br);transition:color .2s,background .2s;}
-.si:last-child{border-right:none;}
-.si.on{color:var(–t1);background:#fff;}
-.si.dn{color:var(–gd);}
-.sn{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-family:var(–f3);font-size:9.5px;flex-shrink:0;}
-.si.on .sn{background:var(–dk);border-color:var(–dk);color:#fff;}
-.si.dn .sn{background:var(–gd);border-color:var(–gd);color:#fff;}
-.si.dn .sn-n{display:none;}
-.si.dn .sn::after{content:”\2713”;font-size:10px;}
-.sp{height:2px;background:var(–or);position:absolute;bottom:0;left:0;transition:width .45s var(–ez);}
-
-/* HERO */
-.hero{background:var(–dk);color:#fff;padding:64px 0 56px;position:relative;overflow:hidden;}
-.hero::before{content:””;position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;}
-.hero::after{content:””;position:absolute;top:0;right:0;bottom:0;width:45%;background:linear-gradient(120deg,rgba(77,217,208,.07) 0%,transparent 65%);pointer-events:none;}
-.hc{position:relative;z-index:1;}
-.ew{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;font-family:var(–f2);font-style:italic;font-size:14px;font-weight:300;color:rgba(255,255,255,.5);}
-.ed{width:5px;height:5px;border-radius:50%;background:var(–tl);flex-shrink:0;animation:blink 2.8s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
-.hero h1{font-family:var(–f2);font-size:clamp(28px,5vw,50px);font-weight:600;line-height:1.08;letter-spacing:-.02em;color:#fff;margin-bottom:18px;}
-.hero h1 span{color:var(–tl);}
-.hl{font-size:16px;line-height:1.78;color:rgba(255,255,255,.65);max-width:560px;margin-bottom:34px;font-weight:300;}
-.mr{display:flex;gap:0;border:1px solid rgba(255,255,255,.09);border-radius:var(–r);overflow:hidden;max-width:560px;margin-bottom:38px;}
-.mc{padding:11px 16px;border-right:1px solid rgba(255,255,255,.09);}
-.mc:last-child{border-right:none;}
-.ml{font-family:var(–f3);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(–tl);opacity:.75;margin-bottom:3px;}
-.mv{font-size:12px;color:rgba(255,255,255,.8);}
-.hs2{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:38px;}
-.st{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);border-radius:var(–r);padding:10px 16px;text-align:center;}
-.sn2{font-family:var(–f2);font-size:21px;font-weight:600;color:#fff;line-height:1;margin-bottom:2px;}
-.sd{font-size:10.5px;color:rgba(255,255,255,.4);letter-spacing:.03em;}
-.cr{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
-.bc{display:inline-flex;align-items:center;gap:9px;background:var(–or);color:#fff;font-family:var(–f1);font-size:14px;font-weight:600;padding:13px 28px;border-radius:var(–r);border:none;cursor:pointer;transition:background .18s,transform .18s,box-shadow .18s;}
-.bc:hover{background:var(–orh);transform:translateY(-1px);box-shadow:0 5px 18px rgba(232,92,42,.32);}
-.cn{font-size:12px;color:rgba(255,255,255,.35);display:flex;flex-direction:column;gap:3px;}
-.cn span::before{content:”· “;}
-
-/* FEATURES */
-.fb{background:var(–ow);border-bottom:1px solid var(–br);}
-.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
-.ft{padding:24px 20px;border-right:1px solid var(–br);}
-.ft:last-child{border-right:none;}
-.fi{font-size:19px;margin-bottom:9px;display:block;}
-.fl{font-family:var(–f3);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(–t4);margin-bottom:5px;}
-.fm{font-size:13px;font-weight:700;color:var(–t1);margin-bottom:4px;line-height:1.3;}
-.fd{font-size:11.5px;color:var(–t3);line-height:1.6;}
-
-/* DISCLAIMER */
-.db{padding:13px 0;border-bottom:1px solid var(–br);}
-.di{display:flex;align-items:flex-start;gap:10px;font-size:11.5px;color:var(–t4);line-height:1.6;}
-.di strong{color:var(–t3);}
-
-/* SCAN BODY */
-.scan{flex:1;padding:32px 0 80px;display:none;}
-
-/* FORM STEPS - THE CRITICAL FIX */
-.fs{display:none;}
-.fs.on{display:block;animation:up .28s var(–ez);}
-@keyframes up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-
-/* SECTION CARDS */
-.sc{background:#fff;border:1px solid var(–br);border-radius:var(–rl);overflow:hidden;margin-bottom:18px;box-shadow:var(–s1);}
-.sch{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:15px 20px;background:var(–ow);border-bottom:1px solid var(–br);}
-.dp{font-family:var(–f3);font-size:10px;font-weight:500;letter-spacing:.08em;color:var(–bl);background:rgba(26,75,140,.08);border:1px solid rgba(26,75,140,.14);padding:3px 9px;border-radius:2px;white-space:nowrap;}
-.sct{font-size:15px;font-weight:700;color:var(–t1);line-height:1.2;}
-.scd{font-size:12px;color:var(–t3);margin-top:2px;}
-.wp{font-family:var(–f3);font-size:9.5px;color:var(–t4);border:1px solid var(–br);padding:3px 8px;border-radius:2px;background:#fff;white-space:nowrap;}
-.scb{padding:22px 20px;}
-
-/* QUESTIONS */
-.qg{margin-bottom:22px;}
-.qg:last-child{margin-bottom:0;}
-.ql{font-size:13px;font-weight:700;color:var(–t1);margin-bottom:5px;display:flex;align-items:center;gap:6px;line-height:1.4;flex-wrap:wrap;}
-.qh{font-size:11.5px;color:var(–t4);margin-bottom:10px;line-height:1.5;}
-
-/* INPUTS */
-input[type=text],input[type=number],select,textarea{width:100%;background:#fff;border:1.5px solid var(–br);border-radius:var(–r);padding:10px 13px;font-family:var(–f1);font-size:13.5px;color:var(–t1);outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;-webkit-appearance:none;}
-input:focus,select:focus,textarea:focus{border-color:var(–bl);box-shadow:0 0 0 3px rgba(26,75,140,.09);}
-input::placeholder{color:var(–t5);}
-select{cursor:pointer;background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘10’ height=‘6’ fill=‘none’%3E%3Cpath d=‘M1 1l4 4 4-4’ stroke=’%236b6b80’ stroke-width=‘1.5’ stroke-linecap=‘round’/%3E%3C/svg%3E”);background-repeat:no-repeat;background-position:right 11px center;padding-right:32px;}
-.r2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.iw{position:relative;}
-.iw input{padding-right:48px;}
-.ix{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-family:var(–f3);font-size:10.5px;color:var(–t4);pointer-events:none;}
-
-/* SLIDERS */
-.slw{margin-top:2px;}
-.sle{display:flex;justify-content:space-between;margin-bottom:5px;}
-.sle span{font-size:10.5px;color:var(–t5);}
-input[type=range]{width:100%;height:4px;background:var(–md);border-radius:2px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;border:none;padding:0;box-shadow:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:#fff;border:2px solid var(–bl);box-shadow:0 1px 4px rgba(26,75,140,.18);cursor:pointer;transition:transform .14s;}
-input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12);}
-input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:#fff;border:2px solid var(–bl);cursor:pointer;}
-.slr{display:flex;align-items:baseline;justify-content:space-between;margin-top:9px;}
-.slv{font-family:var(–f3);font-size:24px;font-weight:500;color:var(–dk);line-height:1;}
-.sld{font-size:12px;color:var(–t3);text-align:right;max-width:220px;line-height:1.4;background:var(–ow);border:1px solid var(–br);border-radius:var(–r);padding:3px 9px;}
-
-/* RADIO */
-.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:7px;}
-.rr{display:flex;gap:7px;flex-wrap:wrap;}
-.ro{position:relative;}
-.ro input{position:absolute;opacity:0;width:0;height:0;}
-.ro label{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:11px 13px;background:#fff;border:1.5px solid var(–br);border-radius:var(–r);cursor:pointer;transition:all .14s var(–ez);font-size:12.5px;font-weight:500;color:var(–t2);line-height:1.3;}
-.ro label .ic{font-size:14px;margin-bottom:2px;}
-.ro input:checked+label{background:rgba(26,75,140,.06);border-color:var(–bl);color:var(–dk);box-shadow:0 0 0 1px rgba(26,75,140,.08);}
-.ro label:hover{border-color:rgba(26,75,140,.4);}
-.rr .ro label{flex-direction:row;align-items:center;gap:7px;padding:9px 14px;}
-.rr .ro label .ic{font-size:13px;margin-bottom:0;}
-
-/* TOOLTIP */
-.tp{position:relative;display:inline-flex;}
-.tpi{width:15px;height:15px;border-radius:50%;background:var(–lt);border:1px solid var(–br);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(–t4);cursor:default;}
-.tpb{display:none;position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(–dk);color:rgba(255,255,255,.82);border-radius:var(–r);padding:9px 13px;font-size:11.5px;width:230px;line-height:1.55;z-index:200;pointer-events:none;box-shadow:var(–s2);}
-.tp:hover .tpb{display:block;}
-
-/* NAV BUTTONS */
-.nr{display:flex;align-items:center;justify-content:space-between;padding:18px 0 0;gap:10px;border-top:1px solid var(–br);margin-top:6px;}
-.bb{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;background:#fff;color:var(–t3);font-family:var(–f1);font-size:13px;font-weight:500;border:1.5px solid var(–br);border-radius:var(–r);cursor:pointer;transition:border-color .15s,color .15s;}
-.bb:hover{border-color:var(–t3);color:var(–t1);}
-.bn{display:inline-flex;align-items:center;gap:7px;padding:10px 24px;background:var(–dk);color:#fff;font-family:var(–f1);font-size:13px;font-weight:600;border:none;border-radius:var(–r);cursor:pointer;transition:background .15s,transform .15s;}
-.bn:hover{background:var(–nv);transform:translateY(-1px);}
-.bca{display:inline-flex;align-items:center;gap:9px;padding:12px 28px;background:var(–or);color:#fff;font-family:var(–f1);font-size:14px;font-weight:600;border:none;border-radius:var(–r);cursor:pointer;transition:background .18s,transform .18s;}
-.bca:hover{background:var(–orh);transform:translateY(-1px);}
-.bstr{display:inline-block;width:2px;height:16px;background:rgba(255,255,255,.4);border-radius:1px;}
-
-/* RESULTS */
-.res{flex:1;padding:0 0 80px;display:none;}
-.rt{padding:48px 0 40px;border-bottom:1px solid var(–br);margin-bottom:36px;}
-.rg2{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;}
-.eg{width:90px;height:90px;border:2px solid;border-radius:var(–rl);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
-.egl{font-family:var(–f2);font-size:48px;font-weight:600;line-height:1;}
-.egs{font-family:var(–f3);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-top:2px;}
-.eg.ca{border-color:#2a7a4a;color:#2a7a4a;background:#e8f5ee;}
-.eg.cb{border-color:var(–bl);color:var(–bl);background:rgba(26,75,140,.07);}
-.eg.cc{border-color:#b84a00;color:#b84a00;background:#fdf0ea;}
-.rm{font-family:var(–f3);font-size:10px;letter-spacing:.1em;color:var(–t4);text-transform:uppercase;margin-bottom:10px;}
-.rh{font-family:var(–f2);font-size:clamp(20px,4vw,34px);font-weight:600;line-height:1.15;color:var(–t1);margin-bottom:8px;}
-.rl2{font-size:14px;color:var(–t3);line-height:1.7;max-width:480px;}
-
-/* KPI */
-.ks{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(–br);border:1px solid var(–br);border-radius:var(–rl);overflow:hidden;margin-bottom:26px;box-shadow:var(–s1);}
-.kc{background:#fff;padding:17px 15px;}
-.kc.kd{background:var(–dk);}
-.kc.kd .kl{color:rgba(255,255,255,.4);}
-.kc.kd .kv{color:var(–tl);}
-.kc.kd .ks2{color:rgba(255,255,255,.35);}
-.kl{font-family:var(–f3);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(–t4);margin-bottom:7px;}
-.kv{font-family:var(–f2);font-size:27px;font-weight:600;line-height:1;margin-bottom:3px;color:var(–t1);}
-.ks2{font-size:11px;color:var(–t4);line-height:1.35;}
-
-/* SCORE TABLE */
-.stb{width:100%;border-collapse:collapse;border:1px solid var(–br);border-radius:var(–r);overflow:hidden;margin-bottom:26px;font-size:13px;box-shadow:var(–s1);}
-.stb th{font-family:var(–f3);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(–t3);background:var(–ow);padding:10px 15px;text-align:left;border-bottom:1px solid var(–br);font-weight:500;}
-.stb td{padding:11px 15px;border-bottom:1px solid var(–lt);vertical-align:middle;}
-.stb tr:last-child td{border-bottom:none;}
-.td1{font-weight:700;color:var(–t1);}
-.td2{font-family:var(–f3);font-size:10.5px;color:var(–t4);}
-.td3{font-family:var(–f3);font-weight:500;font-size:14px;}
-.bw{display:flex;align-items:center;gap:8px;min-width:110px;}
-.bb2{flex:1;height:4px;background:var(–lt);border-radius:2px;overflow:hidden;}
-.bf{height:100%;border-radius:2px;transition:width .9s var(–ez) .3s;}
-
-/* NRV */
-.np{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(–br);border:1px solid var(–br);border-radius:var(–rl);overflow:hidden;margin-bottom:26px;box-shadow:var(–s1);}
-.nc{background:#fff;padding:24px 20px;}
-.nc.nd{background:var(–dk);}
-.nc.nd .nl{color:rgba(255,255,255,.38);}
-.nc.nd .nf{color:var(–tl);}
-.nc.nd .ndt{color:rgba(255,255,255,.5);}
-.nl{font-family:var(–f3);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(–t4);margin-bottom:10px;}
-.nf{font-family:var(–f2);font-size:34px;font-weight:600;line-height:1;margin-bottom:7px;}
-.nf.pos{color:var(–gd);}
-.nf.neg{color:var(–wc);}
-.ndt{font-size:12px;color:var(–t3);line-height:1.6;}
-
-/* ADVICE */
-.ah{font-family:var(–f2);font-size:19px;font-weight:600;color:var(–t1);margin:38px 0 14px;padding-bottom:10px;border-bottom:2px solid var(–dk);display:flex;align-items:baseline;gap:10px;}
-.ah small{font-family:var(–f2);font-style:italic;font-size:13px;color:var(–t4);font-weight:300;}
-.ac{border:1px solid var(–br);border-radius:var(–r);overflow:hidden;margin-bottom:8px;background:#fff;box-shadow:0 1px 3px rgba(26,26,46,.04);transition:box-shadow .18s;}
-.ac:hover{box-shadow:var(–s1);}
-.ach{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(–lt);background:var(–ow);}
-.at{font-family:var(–f3);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;font-weight:600;white-space:nowrap;}
-.at.pos{background:var(–gdbg);color:var(–gd);}
-.at.warn{background:var(–wbg);color:var(–wc);}
-.at.info{background:var(–ibg);color:var(–bl);}
-.atl{font-size:13px;font-weight:700;color:var(–t1);}
-.ab{padding:12px 16px;font-size:12.5px;color:var(–t3);line-height:1.75;}
-
-/* RESULT ACTIONS */
-.ra{display:flex;gap:8px;flex-wrap:wrap;margin-top:34px;padding-top:26px;border-top:1px solid var(–br);}
-.ba{display:inline-flex;align-items:center;gap:7px;padding:9px 17px;font-family:var(–f1);font-size:12.5px;font-weight:500;border-radius:var(–r);cursor:pointer;border:1.5px solid var(–br);background:#fff;color:var(–t2);transition:all .15s;}
-.ba:hover{border-color:var(–t3);background:var(–ow);}
-.ba.p{background:var(–or);color:#fff;border-color:var(–or);}
-.ba.p:hover{background:var(–orh);}
-
-/* FOOTER */
-footer{background:var(–dk);color:rgba(255,255,255,.45);padding:26px 0;margin-top:auto;}
-.fi2{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.fl2{font-size:11.5px;line-height:1.75;}
-.fl2 a{color:rgba(255,255,255,.45);text-decoration:none;}
-.fl2 a:hover{color:rgba(255,255,255,.8);}
-.fl2 strong{color:rgba(255,255,255,.7);}
-.fr{font-family:var(–f3);font-size:9.5px;letter-spacing:.07em;color:rgba(255,255,255,.25);text-align:right;line-height:1.65;}
-
-/* RESPONSIVE */
-@media(max-width:640px){
-.fg{grid-template-columns:1fr 1fr;}
-.r2{grid-template-columns:1fr;}
-.ks{grid-template-columns:1fr 1fr;}
-.np{grid-template-columns:1fr;}
-.rg2{grid-template-columns:1fr;}
-.mr{flex-direction:column;}
-.mc{border-right:none;border-bottom:1px solid rgba(255,255,255,.09);}
-.cb{display:none;}
-.sb,.ub{display:none!important;}
-.sb.on{display:none!important;}
-.nr{flex-direction:column-reverse;}
-.bb,.bn,.bca{width:100%;justify-content:center;}
+body{
+font-family:system-ui,-apple-system;
+margin:0;
+background:var(--bg);
+color:var(--text);
 }
-@media print{
-.sh,.sb,.ub,.ra,.nr,footer{display:none!important;}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:24px;
 }
+
+.hero{
+background:var(--dark);
+color:white;
+padding:60px 24px;
+}
+
+h1{
+font-size:42px;
+margin-bottom:12px;
+}
+
+.subtitle{
+color:#cbd5f5;
+max-width:600px;
+}
+
+.btn{
+background:var(--accent);
+color:white;
+padding:14px 22px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+
+.card{
+background:white;
+border:1px solid var(--border);
+border-radius:8px;
+padding:20px;
+margin-bottom:16px;
+}
+
+.hidden{display:none;}
+
+.progress{
+height:6px;
+background:#e5e7eb;
+margin-bottom:20px;
+border-radius:4px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+background:var(--accent);
+width:0%;
+transition:width .3s;
+}
+
+input, select{
+width:100%;
+padding:10px;
+margin-top:6px;
+border:1px solid var(--border);
+border-radius:6px;
+}
+
+.kpi{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+.kpi div{
+background:white;
+padding:16px;
+border-radius:6px;
+border:1px solid var(--border);
+}
+
 </style>
-
 </head>
+
 <body>
-<div id="app">
 
-<div class="ub">
-  <div class="ui">
-    <div class="ul">
-      <a href="https://abt.eu" target="_blank">abt.eu</a>
-      <div class="us"></div>
-      <a href="https://abt.eu/over-abt/kennisgebieden/" target="_blank">Kennisgebieden</a>
-      <div class="us"></div>
-      <a href="https://abt.eu/contact/" target="_blank">Contact</a>
-      <div class="us"></div>
-      <a href="mailto:info@abt.eu">info@abt.eu</a>
-    </div>
-    <span class="bt">Beta v1.3</span>
-  </div>
+<div class="hero">
+<div class="container">
+<h1>EoL Quickscan</h1>
+<p class="subtitle">
+Kwantificeer de restwaarde en herbestemmingspotentie van uw bouwproject — onderbouwd en direct toepasbaar in investeringsbeslissingen.
+</p>
+<br>
+<button class="btn" onclick="start()">Start analyse →</button>
+</div>
 </div>
 
-<header class="sh">
-  <div class="w">
-    <div class="hw">
-      <div class="la">
-        <img src="data:image/png;base64,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" alt="ABT Adviseurs in bouwtechniek">
-      </div>
-      <div class="ti">
-        <div class="tn">EoL Quickscan</div>
-        <div class="ts">End-of-Life toekomstwaarde analyse</div>
-      </div>
-      <div class="hs"></div>
-      <div class="cb">
-        <svg class="cs" viewBox="0 0 20 20" fill="none">
-          <circle cx="10" cy="10" r="8.5" stroke="rgba(77,217,208,.18)" stroke-width="1"/>
-          <ellipse cx="10" cy="10" rx="5.5" ry="3.5" stroke="#4dd9d0" stroke-width="1" opacity=".85">
-            <animateTransform attributeName="transform" type="rotate" from="0 10 10" to="360 10 10" dur="9s" repeatCount="indefinite"/>
-          </ellipse>
-          <circle cx="10" cy="10" r="1.8" fill="#4dd9d0"/>
-        </svg>
-        <div class="ct"><strong>circle 8</strong>solutions</div>
-      </div>
-    </div>
-  </div>
-</header>
+<div class="container">
 
-<div class="sb" id="sb">
-  <div class="w">
-    <div class="sw">
-      <div class="si on" id="t0"><div class="sn"><span class="sn-n">1</span></div><span>Projectgegevens</span></div>
-      <div class="si" id="t1"><div class="sn"><span class="sn-n">2</span></div><span>Constructie</span></div>
-      <div class="si" id="t2"><div class="sn"><span class="sn-n">3</span></div><span>Materiaal</span></div>
-      <div class="si" id="t3"><div class="sn"><span class="sn-n">4</span></div><span>Financieel</span></div>
-      <div class="sp" id="sp" style="width:0%"></div>
-    </div>
-  </div>
+<div id="app" class="hidden">
+
+<div class="progress"><div id="bar" class="progress-bar"></div></div>
+
+<div id="step1" class="card">
+<h3>Projectgegevens</h3>
+<label>BVO (m²)</label>
+<input id="bvo" type="number" placeholder="5000">
+
+<label>CAPEX (€)</label>
+<input id="cap" type="number" placeholder="2500000">
+
+<br><br>
+<button class="btn" onclick="next(2)">Volgende →</button>
 </div>
 
-<div id="intro">
-  <section class="hero">
-    <div class="w">
-      <div class="hc">
-        <div class="ew"><div class="ed"></div>End-of-Life Quickscan — instrument voor beslissingsmakers in de bouw</div>
-        <h1>Hoe toekomstbestendig<br>is uw <span>bouwproject</span>?</h1>
-        <p class="hl">Beantwoord zestien gerichte vragen en ontvang direct uw EoL-klasse, een kwantitatieve restwaarde-indicatie op T=20 en T=35 jaar, en specifieke constructieve aanbevelingen — onderbouwd door NEN-normen en sectorkengetallen.</p>
-        <div class="mr">
-          <div class="mc"><div class="ml">Norm</div><div class="mv">NEN 10150</div></div>
-          <div class="mc"><div class="ml">Kengetallen</div><div class="mv">MSCI / IPD</div></div>
-          <div class="mc"><div class="ml">Kader</div><div class="mv">Paris Proof 2050</div></div>
-          <div class="mc"><div class="ml">Subsidies</div><div class="mv">MIA / Vamil</div></div>
-        </div>
-        <div class="hs2">
-          <div class="st"><div class="sn2">16</div><div class="sd">vragen</div></div>
-          <div class="st"><div class="sn2">4</div><div class="sd">dimensies</div></div>
-          <div class="st"><div class="sn2">~12</div><div class="sd">minuten</div></div>
-          <div class="st"><div class="sn2">&#8364;/m&#178;</div><div class="sd">NRV output</div></div>
-        </div>
-        <div class="cr">
-          <button class="bc" onclick="startScan()">Start de scan &#8594;</button>
-          <div class="cn">
-            <span>Geschikt voor SO, VO, DO en TO-fase</span>
-            <span>Geen data opgeslagen &#8212; volledig lokaal</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="fb">
-    <div class="w">
-      <div class="fg">
-        <div class="ft"><span class="fi">&#128208;</span><div class="fl">01 &#8212; Scoringssysteem</div><div class="fm">4 gewogen dimensies</div><div class="fd">Constructieve flexibiliteit (30%), ontkoppelbaarheid (30%), materiaaldocumentatie (20%), herbestemmingspotentie (20%).</div></div>
-        <div class="ft"><span class="fi">&#128182;</span><div class="fl">02 &#8212; Financi&#235;le output</div><div class="fm">NRV in &#8364; en &#8364;/m&#178; BVO</div><div class="fd">Netto Restwaardevoordeel op T=20 en T=35 jaar. Direct inzetbaar in een financieringsaanvraag of taxatierapport.</div></div>
-        <div class="ft"><span class="fi">&#9879;&#65039;</span><div class="fl">03 &#8212; Methodologie</div><div class="fm">Wetenschappelijk onderbouwd</div><div class="fd">NEN 10150, IPD/MSCI, Paris Proof 2050 en EU Taxonomy circulaire criteria. Onafhankelijk ontwikkeld door ABT.</div></div>
-        <div class="ft"><span class="fi">&#128274;</span><div class="fl">04 &#8212; Privacy</div><div class="fm">Volledig lokaal</div><div class="fd">Alle berekeningen vinden lokaal in uw browser plaats. Geen projectdata wordt verstuurd of opgeslagen.</div></div>
-      </div>
-    </div>
-  </div>
-  <div class="db">
-    <div class="w">
-      <div class="di"><span>&#9888;&#65039;</span><div><strong>Disclaimer:</strong> Dit instrument levert indicatieve resultaten op basis van uw invoer en sectorgemiddelden. De uitkomsten vervangen geen formeel haalbaarheidsonderzoek of taxatie. ABT en Circle 8 Solutions aanvaarden geen aansprakelijkheid voor beslissingen genomen op basis van dit prototype (v1.3).</div></div>
-    </div>
-  </div>
+<div id="step2" class="card hidden">
+<h3>Flexibiliteit</h3>
+<label>Kolomraster (m²/kolom)</label>
+<input id="kol" type="number" value="1500">
+
+<br><br>
+<button class="btn" onclick="next(3)">Volgende →</button>
 </div>
 
-<div class="scan" id="scan">
-  <div class="w">
+<div id="step3" class="card hidden">
+<h3>Financieel</h3>
+<label>Discontovoet (%)</label>
+<input id="disc" type="number" value="5">
 
-```
-<div class="fs on" id="s0">
-  <div class="sc"><div class="sch"><div class="dp">Projectdata</div><div><div class="sct">Projectidentificatie</div><div class="scd">Basisgegevens voor rapportgeneratie en kalibratie van sectorkengetallen</div></div><div class="wp">stap 1 / 4</div></div>
-  <div class="scb">
-    <div class="qg"><div class="ql">Projectnaam</div><input type="text" id="pnm" placeholder="bijv. Koelhal Logistics Park Tilburg, fase 2"></div>
-    <div class="qg"><div class="ql">Gebouwtype <div class="tp"><div class="tpi">?</div><div class="tpb">Het gebouwtype bepaalt welke sectorspecifieke kengetallen de scan gebruikt voor de NRV-berekening.</div></div></div>
-      <div class="rg">
-        <div class="ro"><input type="radio" name="gt" id="g1" value="koel" checked><label for="g1"><span class="ic">&#10052;&#65039;</span>Koellogistiek</label></div>
-        <div class="ro"><input type="radio" name="gt" id="g2" value="zorg"><label for="g2"><span class="ic">&#127973;&#65039;</span>Zorghuisvesting</label></div>
-        <div class="ro"><input type="radio" name="gt" id="g3" value="ind"><label for="g3"><span class="ic">&#127981;&#65039;</span>Industrieel</label></div>
-        <div class="ro"><input type="radio" name="gt" id="g4" value="util"><label for="g4"><span class="ic">&#127970;</span>Utiliteit</label></div>
-      </div>
-    </div>
-    <div class="r2">
-      <div class="qg"><div class="ql">Bruto vloeroppervlak (BVO)</div><div class="iw"><input type="number" id="bvo" placeholder="5000" min="100"><span class="ix">m&#178;</span></div></div>
-      <div class="qg"><div class="ql">Constructieve CAPEX (indicatief)</div><div class="iw"><input type="number" id="cap" placeholder="2500000" min="0"><span class="ix">&#8364;</span></div></div>
-    </div>
-    <div class="r2">
-      <div class="qg"><div class="ql">Geplande oplevering</div><input type="number" id="opl" placeholder="2026" min="2024" max="2042"></div>
-      <div class="qg"><div class="ql">Ontwerpfase</div><select id="fas"><option value="SO">Structuurontwerp (SO)</option><option value="VO" selected>Voorlopig Ontwerp (VO)</option><option value="DO">Definitief Ontwerp (DO)</option><option value="TO">Technisch Ontwerp (TO)</option></select></div>
-    </div>
-  </div></div>
-  <div class="nr">
-    <button class="bb" onclick="toIntro()">&#8592; Terug naar start</button>
-    <button class="bn" onclick="go(1)">Constructieve flexibiliteit &#8594;</button>
-  </div>
+<br><br>
+<button class="btn" onclick="calc()">Bereken →</button>
 </div>
 
-<div class="fs" id="s1">
-  <div class="sc"><div class="sch"><div class="dp">D1 &#8212; Flexibiliteit</div><div><div class="sct">Constructieve Flexibiliteit</div><div class="scd">Hoe adaptief is de draagstructuur voor toekomstige functionele wijzigingen?</div></div><div class="wp">gewicht 30%</div></div>
-  <div class="scb">
-    <div class="qg"><div class="ql">Kolomraster <div class="tp"><div class="tpi">?</div><div class="tpb">Scores: &lt;1.000 &#8594; 1 &#183; 1.000&#8211;1.499 &#8594; 2 &#183; 1.500&#8211;1.999 &#8594; 3 &#183; 2.000&#8211;2.499 &#8594; 4 &#183; &#8805;2.500 &#8594; 5</div></div></div>
-      <div class="qh">Netto vloeroppervlak per constructiekolom</div>
-      <div class="iw" style="max-width:190px"><input type="number" id="kol" placeholder="1500" min="100" max="10000"><span class="ix">m&#178;/kol</span></div>
-    </div>
-    <div class="qg"><div class="ql">Vrije hoogte vs. functionele minimumeis <div class="tp"><div class="tpi">?</div><div class="tpb">1 = exact minimum. 5 = &#8805;1,5&#215; de functionele eis &#8212; extra verdieping of andere bestemming haalbaar.</div></div></div>
-      <div class="slw"><div class="sle"><span>Exact minimum</span><span>Ruim surplus</span></div>
-      <input type="range" id="hgt" min="1" max="5" step="1" value="3" oninput="dsl(this,'hv','hd',['Exact minimum','Beperkte marge','Enige marge','Goede marge','Ruim surplus'])">
-      <div class="slr"><span class="slv" id="hv">3</span><span class="sld" id="hd">Enige marge</span></div></div>
-    </div>
-    <div class="qg"><div class="ql">Vloerbelastingscapaciteit-reserve <div class="tp"><div class="tpi">?</div><div class="tpb">1 = ontworpen op exact de huidige exploitatielast. 5 = &#8805;30% structurele reserve.</div></div></div>
-      <div class="slw"><div class="sle"><span>Geen reserve</span><span>&#8805;30% reserve</span></div>
-      <input type="range" id="bel" min="1" max="5" step="1" value="3" oninput="dsl(this,'bv','bd',['Geen reserve','&lt;10%','10&#8211;20%','20&#8211;30%','&#8805;30%'])">
-      <div class="slr"><span class="slv" id="bv">3</span><span class="sld" id="bd">10&#8211;20%</span></div></div>
-    </div>
-  </div></div>
-  <div class="sc" style="margin-top:16px"><div class="sch"><div class="dp">D2 &#8212; Ontkoppeling</div><div><div class="sct">Ontkoppelbaarheid</div><div class="scd">Kan de installatie worden vervangen zonder ingreep in de draagstructuur?</div></div><div class="wp">gewicht 30%</div></div>
-  <div class="scb">
-    <div class="qg"><div class="ql">Ingrepen bij volledige installatievervanging <div class="tp"><div class="tpi">?</div><div class="tpb">1 = installatie volledig verweven. 5 = volledig demontabel zonder structurele ingreep.</div></div></div>
-      <div class="slw"><div class="sle"><span>Volledig verweven</span><span>Volledig demontabel</span></div>
-      <input type="range" id="ont" min="1" max="5" step="1" value="3" oninput="dsl(this,'ov','od',['Volledig verweven','Sterk verweven','Gedeeltelijk ontkoppeld','Grotendeels ontkoppeld','Volledig demontabel'])">
-      <div class="slr"><span class="slv" id="ov">3</span><span class="sld" id="od">Gedeeltelijk ontkoppeld</span></div></div>
-    </div>
-    <div class="qg"><div class="ql">Zone-onafhankelijkheid installatieschachten <div class="tp"><div class="tpi">?</div><div class="tpb">1 = &#233;&#233;n centraal niet-opdeelbaar systeem. 5 = volledig zone-onafhankelijk.</div></div></div>
-      <div class="slw"><div class="sle"><span>Centraal systeem</span><span>Volledig zonair</span></div>
-      <input type="range" id="sch" min="1" max="5" step="1" value="2" oninput="dsl(this,'sv','sd',['Centraal systeem','Beperkt opdeelbaar','Gedeeltelijk zonair','Grotendeels zonair','Volledig zone-onafhankelijk'])">
-      <div class="slr"><span class="slv" id="sv">2</span><span class="sld" id="sd">Beperkt opdeelbaar</span></div></div>
-    </div>
-    <div class="qg"><div class="ql">Toegankelijke vloeropbouwen voor leidingvervanging?</div>
-      <div class="rr">
-        <div class="ro"><input type="radio" name="vl" id="v1" value="1"><label for="v1"><span class="ic">&#10007;</span>Nee</label></div>
-        <div class="ro"><input type="radio" name="vl" id="v2" value="2"><label for="v2"><span class="ic">&#9681;</span>Deels</label></div>
-        <div class="ro"><input type="radio" name="vl" id="v3" value="4" checked><label for="v3"><span class="ic">&#10003;</span>Grotendeels</label></div>
-        <div class="ro"><input type="radio" name="vl" id="v4" value="5"><label for="v4"><span class="ic">&#9733;</span>Volledig</label></div>
-      </div>
-    </div>
-  </div></div>
-  <div class="nr">
-    <button class="bb" onclick="go(0)">&#8592; Vorige</button>
-    <button class="bn" onclick="go(2)">Materiaal &amp; herbestemming &#8594;</button>
-  </div>
+<div id="result" class="hidden">
+
+<h2>Resultaat</h2>
+
+<div class="kpi">
+<div><strong>EoL score</strong><br><span id="score"></span></div>
+<div><strong>NRV (20 jr)</strong><br><span id="nrv"></span></div>
 </div>
 
-<div class="fs" id="s2">
-  <div class="sc"><div class="sch"><div class="dp">D3 &#8212; Materiaal</div><div><div class="sct">Materiaaldocumentatie</div><div class="scd">Is het toekomstig hergebruik van materialen geborgd door documentatie?</div></div><div class="wp">gewicht 20%</div></div>
-  <div class="scb">
-    <div class="qg"><div class="ql">% constructieve elementen gedocumenteerd <div class="tp"><div class="tpi">?</div><div class="tpb">Materiaalkwaliteit (S355, C30/37), profieltype en verbindingstechniek per element vastgelegd in het constructief eindrapport?</div></div></div>
-      <div class="qh">Type, kwaliteit en verbindingstechniek per element</div>
-      <div class="slw"><div class="sle"><span>0%</span><span>100%</span></div>
-      <input type="range" id="doc" min="0" max="100" step="10" value="30" oninput="dslp(this,'dv','dd')">
-      <div class="slr"><span class="slv" id="dv">30%</span><span class="sld" id="dd">Basisregistratie</span></div></div>
-    </div>
-    <div class="qg"><div class="ql">Materiaalpassport status</div>
-      <div class="rg">
-        <div class="ro"><input type="radio" name="mp" id="m1" value="1" checked><label for="m1"><span class="ic">&#10007;</span>Niet aanwezig</label></div>
-        <div class="ro"><input type="radio" name="mp" id="m2" value="2"><label for="m2"><span class="ic">&#9719;</span>Gepland</label></div>
-        <div class="ro"><input type="radio" name="mp" id="m3" value="4"><label for="m3"><span class="ic">&#9681;</span>Gedeeltelijk</label></div>
-        <div class="ro"><input type="radio" name="mp" id="m4" value="5"><label for="m4"><span class="ic">&#9733;</span>Volledig</label></div>
-      </div>
-    </div>
-    <div class="qg"><div class="ql">Verbindingstechnieken: demontabiliteit <div class="tp"><div class="tpi">?</div><div class="tpb">1 = volledig ingestort/gelijmd. 5 = volledig demontabel (HV-bouten, NEN-EN 1090 EXC2).</div></div></div>
-      <div class="slw"><div class="sle"><span>Volledig ingestort</span><span>Volledig demontabel</span></div>
-      <input type="range" id="vrb" min="1" max="5" step="1" value="2" oninput="dsl(this,'vv','vd',['Volledig ingestort','Overwegend monolithisch','Mix monolithisch/demontabel','Overwegend demontabel','Volledig demontabel'])">
-      <div class="slr"><span class="slv" id="vv">2</span><span class="sld" id="vd">Overwegend monolithisch</span></div></div>
-    </div>
-  </div></div>
-  <div class="sc" style="margin-top:16px"><div class="sch"><div class="dp">D4 &#8212; Herbestemming</div><div><div class="sct">Herbestemmingspotentie</div><div class="scd">Hoeveel alternatieve bestemmingen zijn haalbaar zonder draagstructuurwijziging?</div></div><div class="wp">gewicht 20%</div></div>
-  <div class="scb">
-    <div class="qg"><div class="ql">Haalbare alternatieve bestemmingen <div class="tp"><div class="tpi">?</div><div class="tpb">Logistiek, lichte industrie, datacentrum, stadslandbouw, retail, wonen &#8212; elke haalbare bestemming zonder constructieve ingreep telt als +1.</div></div></div>
-      <div class="rr">
-        <div class="ro"><input type="radio" name="hb" id="h0" value="1" checked><label for="h0"><span class="ic">0</span>Geen</label></div>
-        <div class="ro"><input type="radio" name="hb" id="h1" value="2"><label for="h1"><span class="ic">1</span>1 optie</label></div>
-        <div class="ro"><input type="radio" name="hb" id="h2" value="3"><label for="h2"><span class="ic">2</span>2 opties</label></div>
-        <div class="ro"><input type="radio" name="hb" id="h3" value="5"><label for="h3"><span class="ic">&#8805;3</span>3+ opties</label></div>
-      </div>
-    </div>
-    <div class="qg"><div class="ql">Gevelschil: onafhankelijk vervangbaar? <div class="tp"><div class="tpi">?</div><div class="tpb">Kan de gevel per segment worden vervangen zonder steigers binnenshuis en zonder structurele ingreep?</div></div></div>
-      <div class="rr">
-        <div class="ro"><input type="radio" name="gv" id="g5" value="1"><label for="g5"><span class="ic">&#10007;</span>Nee</label></div>
-        <div class="ro"><input type="radio" name="gv" id="g6" value="2"><label for="g6"><span class="ic">&#9681;</span>Deels</label></div>
-        <div class="ro"><input type="radio" name="gv" id="g7" value="4" checked><label for="g7"><span class="ic">&#10003;</span>Grotendeels</label></div>
-        <div class="ro"><input type="radio" name="gv" id="g8" value="5"><label for="g8"><span class="ic">&#9733;</span>Volledig segmentair</label></div>
-      </div>
-    </div>
-    <div class="qg"><div class="ql">Locatie-index <div class="tp"><div class="tpi">?</div><div class="tpb">Inbreidingslocaties dichtbij stedelijk gebied bieden significant meer herbestemmingskansen dan monofunctionele bedrijventerreinen.</div></div></div>
-      <div class="rr">
-        <div class="ro"><input type="radio" name="lo" id="l1" value="1"><label for="l1"><span class="ic">&#9643;</span>Monofunctioneel</label></div>
-        <div class="ro"><input type="radio" name="lo" id="l2" value="3" checked><label for="l2"><span class="ic">&#9672;</span>Gemengd terrein</label></div>
-        <div class="ro"><input type="radio" name="lo" id="l3" value="5"><label for="l3"><span class="ic">&#9711;</span>Stedelijke inbreiding</label></div>
-      </div>
-    </div>
-  </div></div>
-  <div class="nr">
-    <button class="bb" onclick="go(1)">&#8592; Vorige</button>
-    <button class="bn" onclick="go(3)">Financi&#235;le parameters &#8594;</button>
-  </div>
 </div>
 
-<div class="fs" id="s3">
-  <div class="sc"><div class="sch"><div class="dp">NRV &#8212; Financieel</div><div><div class="sct">Financi&#235;le parameters</div><div class="scd">Kalibreer de restwaarde-berekening op uw project. Standaardwaarden zijn sectorgemiddelden.</div></div><div class="wp">stap 4 / 4</div></div>
-  <div class="scb">
-    <div class="r2">
-      <div class="qg"><div class="ql">CAPEX-delta toekomstbestendigheid <div class="tp"><div class="tpi">?</div><div class="tpb">Meerkosten voor adaptief ontwerp. Typisch 2&#8211;6% van constructieve CAPEX.</div></div></div><div class="iw"><input type="number" id="dcp" value="4" min="0" max="20"><span class="ix">%</span></div></div>
-      <div class="qg"><div class="ql">Discontovoet <div class="tp"><div class="tpi">?</div><div class="tpb">Standaard 5% commercieel. Zorgvastgoed NHC: 3&#8211;4%.</div></div></div><div class="iw"><input type="number" id="dis" value="5" min="1" max="15"><span class="ix">%</span></div></div>
-    </div>
-    <div class="r2">
-      <div class="qg"><div class="ql">Herbestemmingskans T=20 jr <div class="tp"><div class="tpi">?</div><div class="tpb">Sectorgemiddelden: koellogistiek 25&#8211;35% &#183; zorghuisvesting 15&#8211;20% &#183; utiliteit 30&#8211;45%.</div></div></div><div class="iw"><input type="number" id="k20" value="30" min="0" max="100"><span class="ix">%</span></div></div>
-      <div class="qg"><div class="ql">Herbestemmingskans T=35 jr</div><div class="iw"><input type="number" id="k35" value="60" min="0" max="100"><span class="ix">%</span></div></div>
-    </div>
-    <div class="r2">
-      <div class="qg"><div class="ql">Sloopkostenbesparing <div class="tp"><div class="tpi">?</div><div class="tpb">Reductie door betere documentatie en demontabiliteit. NEN 10150. Typisch &#8364;15&#8211;45/m&#178; BVO.</div></div></div><div class="iw"><input type="number" id="slp" value="25" min="0" max="200"><span class="ix">&#8364;/m&#178;</span></div></div>
-      <div class="qg"><div class="ql">Herbestemmingsmeerwaarde <div class="tp"><div class="tpi">?</div><div class="tpb">Verschil vastgoedwaarde bij geslaagde herbestemming t.o.v. sloopwaarde. BAR-kengetallen: &#8364;150&#8211;600/m&#178; BVO.</div></div></div><div class="iw"><input type="number" id="hbw" value="300" min="0" max="2000"><span class="ix">&#8364;/m&#178;</span></div></div>
-    </div>
-  </div></div>
-  <div class="nr">
-    <button class="bb" onclick="go(2)">&#8592; Vorige</button>
-    <button class="bca" onclick="doCalc()"><span class="bstr"></span>Bereken EoL-score &amp; restwaarde</button>
-  </div>
 </div>
-```
-
-  </div>
 </div>
 
-<div class="res" id="res">
-  <div class="w">
-    <div class="rt">
-      <div class="rg2">
-        <div class="eg" id="eg"><span class="egl" id="egl">A</span><span class="egs">EoL-klasse</span></div>
-        <div><div class="rm" id="rm"></div><h2 class="rh" id="rh"></h2><p class="rl2" id="rl2"></p></div>
-      </div>
-    </div>
-    <div class="ks" id="ks"></div>
-    <table class="stb"><thead><tr><th>Dimensie</th><th>Gewicht</th><th>Score / 20</th><th style="min-width:110px">Verdeling</th></tr></thead><tbody id="stb"></tbody></table>
-    <div class="np">
-      <div class="nc nd"><div class="nl">Netto Restwaardevoordeel &#8212; T=20 jaar</div><div class="nf" id="n20"></div><div class="ndt" id="n20d"></div></div>
-      <div class="nc"><div class="nl">Netto Restwaardevoordeel &#8212; T=35 jaar</div><div class="nf" id="n35"></div><div class="ndt" id="n35d"></div></div>
-    </div>
-    <div class="ah">Constructieve aanbevelingen <small>op basis van uw projectscores</small></div>
-    <div id="adv"></div>
-    <div class="ra">
-      <button class="ba" onclick="window.print()">&#128438; Opslaan als pdf</button>
-      <button class="ba" onclick="doRestart()">&#8635; Nieuwe scan</button>
-      <button class="ba p" onclick="window.open('https://abt.eu/contact/','_blank')">Vraag verdiepingsadvies aan bij ABT &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div class="w">
-    <div class="fi2">
-      <div class="fl2">
-        <strong>ABT Adviseurs in bouwtechniek</strong><br>
-        Velperweg 37, 6824 BE Velp &#183; <a href="tel:+31263690200">+31 (0)26 369 02 00</a> &#183; <a href="mailto:info@abt.eu">info@abt.eu</a> &#183; <a href="https://abt.eu" target="_blank">abt.eu</a><br>
-        EoL Quickscan i.s.m. <a href="https://circle8solutions.com" target="_blank">Circle 8 Solutions</a> &#183; Methodiek: NEN 10150 &#183; MSCI/IPD &#183; Paris Proof 2050
-      </div>
-      <div class="fr">v1.3 Prototype<br>&#169; 2026 ABT B.V.</div>
-    </div>
-  </div>
-</footer>
-
-</div>
 <script>
-var cur=0;
-function gv(id){return parseFloat(document.getElementById(id).value)||0;}
-function gi(id){return parseInt(document.getElementById(id).value)||0;}
-function gr(nm,def){var e=document.querySelector('input[name="'+nm+'"]:checked');return e?parseInt(e.value):def;}
-function feu(n){var a=Math.abs(Math.round(n)),s=n>=0?'+':'−';if(a>=1000000)return s+'€ '+(a/1e6).toFixed(2).replace('.',',')+' mln';return s+'€ '+a.toLocaleString('nl-NL');}
+let step=1;
 
-function startScan(){
-document.getElementById(‘intro’).style.display=‘none’;
-document.getElementById(‘scan’).style.display=‘block’;
-document.getElementById(‘sb’).classList.add(‘on’);
-cur=0;tabs();scroll(0,0);
-}
-function toIntro(){
-document.getElementById(‘intro’).style.display=‘block’;
-document.getElementById(‘scan’).style.display=‘none’;
-document.getElementById(‘sb’).classList.remove(‘on’);
-scroll(0,0);
-}
-function go(n){
-document.getElementById(‘s’+cur).classList.remove(‘on’);
-cur=n;
-document.getElementById(‘s’+cur).classList.add(‘on’);
-tabs();scroll(0,0);
-}
-function tabs(){
-for(var i=0;i<4;i++){
-var t=document.getElementById(‘t’+i);
-t.classList.remove(‘on’,‘dn’);
-if(i<cur)t.classList.add(‘dn’);
-else if(i===cur)t.classList.add(‘on’);
-}
-document.getElementById(‘sp’).style.width=(((cur+1)/4)*100)+’%’;
-}
-function doRestart(){
-document.getElementById(‘res’).style.display=‘none’;
-document.getElementById(‘sb’).classList.remove(‘on’);
-toIntro();
+function start(){
+document.getElementById("app").classList.remove("hidden");
+updateBar();
 }
 
-function dsl(el,vid,did,labs){
-var v=parseInt(el.value);
-document.getElementById(vid).textContent=v;
-document.getElementById(did).textContent=labs[v-1]||’’;
-var p=((v-1)/4)*100;
-el.style.background=‘linear-gradient(to right,#1a4b8c 0%,#1a4b8c ‘+p+’%,#e2e0dc ‘+p+’%)’;
-}
-function dslp(el,vid,did){
-var v=parseInt(el.value);
-document.getElementById(vid).textContent=v+’%’;
-var d=‘Geen documentatie’;
-if(v>=80)d=‘Uitgebreide documentatie’;
-else if(v>=60)d=‘Goede documentatie’;
-else if(v>=40)d=‘Redelijke documentatie’;
-else if(v>=20)d=‘Basisregistratie’;
-document.getElementById(did).textContent=d;
-el.style.background=‘linear-gradient(to right,#1a4b8c 0%,#1a4b8c ‘+v+’%,#e2e0dc ‘+v+’%)’;
+function next(n){
+document.getElementById("step"+step).classList.add("hidden");
+step=n;
+document.getElementById("step"+step).classList.remove("hidden");
+updateBar();
 }
 
-function doCalc(){
-var bvo=gv(‘bvo’)||3000, cap=gv(‘cap’)||2500000;
-var dPct=(gv(‘dcp’)||4)/100, disc=(gv(‘dis’)||5)/100;
-var k20=(gv(‘k20’)||30)/100, k35=(gv(‘k35’)||60)/100;
-var slp=gv(‘slp’)||25, hbw=gv(‘hbw’)||300;
-var pnm=document.getElementById(‘pnm’).value||‘Naamloos project’;
-
-var kv=gv(‘kol’)||1000;
-var ks=kv>=2500?5:kv>=2000?4:kv>=1500?3:kv>=1000?2:1;
-var hgt=gi(‘hgt’)||3, bel=gi(‘bel’)||3;
-var d1=(ks+hgt+bel)/3;
-
-var ont=gi(‘ont’)||3, sch=gi(‘sch’)||2, vloe=gr(‘vl’,4);
-var d2=(ont+sch+vloe)/3;
-
-var docP=gi(‘doc’)||30;
-var docS=docP>=80?5:docP>=60?4:docP>=40?3:docP>=20?2:1;
-var mpS=gr(‘mp’,1), vrb=gi(‘vrb’)||2;
-var d3=(docS+mpS+vrb)/3;
-
-var hbS=gr(‘hb’,1), gvS=gr(‘gv’,4), loS=gr(‘lo’,3);
-var d4=(hbS+gvS+loS)/3;
-
-var tot=Math.min(20,Math.round((d1*.3+d2*.3+d3*.2+d4*.2)*4));
-var d1s=Math.round(d1*4),d2s=Math.round(d2*4),d3s=Math.round(d3*4),d4s=Math.round(d4*4);
-
-var cls,head,lead;
-if(tot>=16){cls=‘a’;head=‘Hoge toekomstwaarde’;lead=‘Dit project scoort sterk op adaptiviteit. Met beperkte aanpassingen is een robuust EoL-scenario realiseerbaar.’;}
-else if(tot>=11){cls=‘b’;head=‘Gemiddeld toekomstpotentieel’;lead=‘Gerichte ontwerpinterventies zijn aanbevolen om de residuwaarde structureel te verhogen.’;}
-else{cls=‘c’;head=‘Beperkt toekomstpotentieel’;lead=‘Dit project heeft significante EoL-risico’s. De business case voor aanpassingen nu is financieel sterk.’;}
-
-var dC=cap*dPct, dvs=hbw+slp;
-var n20=(k20*dvs*bvo)-(dC*Math.pow(1+disc,20));
-var n35=(k35*dvs*bvo)-(dC*Math.pow(1+disc,35));
-
-showRes(cls,head,lead,tot,d1s,d2s,d3s,d4s,n20,n35,bvo,dC,k20,k35,pnm,ks,ont,vrb,hbS,docP);
+function updateBar(){
+document.getElementById("bar").style.width=(step/3*100)+"%";
 }
 
-function showRes(cls,head,lead,tot,d1s,d2s,d3s,d4s,n20,n35,bvo,dC,k20,k35,pnm,ks,ont,vrb,hbS,docP){
-document.getElementById(‘scan’).style.display=‘none’;
-document.getElementById(‘sb’).classList.remove(‘on’);
-document.getElementById(‘res’).style.display=‘block’;
+function calc(){
+let bvo=+document.getElementById("bvo").value||3000;
+let cap=+document.getElementById("cap").value||2000000;
+let kol=+document.getElementById("kol").value||1500;
+let disc=(+document.getElementById("disc").value||5)/100;
 
-var g=document.getElementById(‘eg’);
-g.className=‘eg c’+cls;
-document.getElementById(‘egl’).textContent=cls.toUpperCase();
-document.getElementById(‘rm’).textContent=pnm+’ · ’+new Date().toLocaleDateString(‘nl-NL’,{year:‘numeric’,month:‘long’,day:‘numeric’});
-document.getElementById(‘rh’).textContent=head;
-document.getElementById(‘rl2’).textContent=lead;
+let score=Math.min(20,Math.round(kol/100));
+let nrv=(bvo*300*0.3)-(cap*0.04*Math.pow(1+disc,20));
 
-var tc=cls===‘a’?’#2a7a4a’:cls===‘b’?’#1a4b8c’:’#b84a00’;
-document.getElementById(‘ks’).innerHTML=
-‘<div class="kc kd"><div class="kl">EoL-klasse</div><div class="kv">’+cls.toUpperCase()+’</div><div class="ks2">A (best) — C</div></div>’+
-‘<div class="kc"><div class="kl">Totaalscore</div><div class="kv" style="color:'+tc+'">’+tot+’<span style="font-size:15px;color:#9898a8"> / 20</span></div><div class="ks2">gewogen score</div></div>’+
-‘<div class="kc"><div class="kl">NRV T†20 jaar</div><div class="kv" style="font-size:20px;color:'+(n20>=0?'#2a7a4a':'#b84a00')+'">’+feu(n20)+’</div><div class="ks2">’+Math.round(n20/bvo)+’ €/m² BVO</div></div>’+
-‘<div class="kc"><div class="kl">NRV T†35 jaar</div><div class="kv" style="font-size:20px;color:'+(n35>=0?'#2a7a4a':'#b84a00')+'">’+feu(n35)+’</div><div class="ks2">’+Math.round(n35/bvo)+’ €/m² BVO</div></div>’;
+document.getElementById("score").innerText=score+" / 20";
+document.getElementById("nrv").innerText="€ "+Math.round(nrv).toLocaleString();
 
-var dc=[’#1a4b8c’,’#1a6ba8’,’#2a7a4a’,’#1a8a82’];
-var rows=[[‘D1’,‘Constructieve flexibiliteit’,‘30%’,d1s,dc[0]],[‘D2’,‘Ontkoppelbaarheid’,‘30%’,d2s,dc[1]],[‘D3’,‘Materiaaldocumentatie’,‘20%’,d3s,dc[2]],[‘D4’,‘Herbestemmingspotentie’,‘20%’,d4s,dc[3]]];
-var html=’’;
-for(var i=0;i<rows.length;i++){
-var r=rows[i],p=(r[3]/20)*100;
-html+=’<tr><td class="td1">’+r[0]+’ — ‘+r[1]+’</td><td class="td2">’+r[2]+’</td><td class="td3" style="color:'+r[4]+'">’+r[3]+’ / 20</td><td><div class="bw"><div class="bb2"><div class="bf" style="width:'+p+'%;background:'+r[4]+'"></div></div></div></td></tr>’;
-}
-var tp=(tot/20)*100;
-html+=’<tr style="background:#f8f8f6;font-weight:700"><td class="td1" style="color:'+tc+'">Totaal (gewogen)</td><td class="td2">100%</td><td class="td3" style="color:'+tc+';font-size:15px">’+tot+’ / 20</td><td><div class="bw"><div class="bb2"><div class="bf" style="width:'+tp+'%;background:'+tc+'"></div></div></div></td></tr>’;
-document.getElementById(‘stb’).innerHTML=html;
-
-document.getElementById(‘n20’).textContent=feu(n20);
-document.getElementById(‘n20d’).textContent=(k20*100).toFixed(0)+’% herbestemmingskans · CAPEX-delta ‘+feu(dC).replace(’+’,’’);
-var n35el=document.getElementById(‘n35’);
-n35el.className=’nf ’+(n35>=0?‘pos’:‘neg’);
-n35el.textContent=feu(n35);
-document.getElementById(‘n35d’).textContent=(k35*100).toFixed(0)+’% herbestemmingskans · ‘+Math.round(n35/bvo)+’ €/m² BVO’;
-
-var adv=’’;
-if(ks<=2)adv+=’<div class="ac"><div class="ach"><span class="at warn">Aandachtspunt</span><span class="atl">Kolomraster</span></div><div class="ab">Het kolomraster biedt beperkte flexibiliteit. Vergroting naar ≥1.500 m²/kolom verhoogt de herbestemmingspotentie aanzienlijk. Typische CAPEX-delta: €30–80/m² BVO — terugverdiend bij één herbestemmingsscenario.</div></div>’;
-else adv+=’<div class="ac"><div class="ach"><span class="at pos">Goed</span><span class="atl">Kolomraster</span></div><div class="ab">Het kolomraster scoort adequaat. Documenteer de exacte overspanningsgegevens inclusief maximale belastingscapaciteit in het constructief eindrapport voor toekomstige financiering en taxatie.</div></div>’;
-if(ont<=2)adv+=’<div class="ac"><div class="ach"><span class="at warn">Aandachtspunt</span><span class="atl">Ontkoppelbaarheid installaties</span></div><div class="ab">Installaties zijn sterk verweven met de draagstructuur. Introduceer ontkoppelingslagen: installatieschachten per zone, verhoogde vloeren of prefab gevelelementen. De besparing bij vervanging over 15–20 jaar is substantieel.</div></div>’;
-if(vrb<=2)adv+=’<div class="ac"><div class="ach"><span class="at warn">Aandachtspunt</span><span class="atl">Verbindingstechnieken</span></div><div class="ab">Monolithische verbindingen reduceren de circulaire restwaarde significant. Overweeg geschroefde flensverbindingen (HV-bouten, NEN-EN 1090 EXC2) of droge verbindingen bij prefab-elementen.</div></div>’;
-if(docP<60)adv+=’<div class="ac"><div class="ach"><span class="at info">Advies</span><span class="atl">Materiaaldocumentatie</span></div><div class="ab">Vastlegging van materiaalkwaliteiten en profieltypes kost minimale extra inspanning maar levert substantieel voordeel op bij circulariteitsaudits, MIA/Vamil-aanvragen en Madaster-integratie.</div></div>’;
-if(hbS<=2)adv+=’<div class="ac"><div class="ach"><span class="at info">Advies</span><span class="atl">Herbestemmingspotentie</span></div><div class="ab">Het aantal haalbare alternatieve bestemmingen is laag. Een korte scenariostudie met 2–3 toekomstige bestemmingen geeft inzicht in welke constructieve keuzes nu minimale meerkosten vergen maar maximale flexibiliteit bieden.</div></div>’;
-if(n20>0)adv+=’<div class="ac"><div class="ach"><span class="at pos">Positief</span><span class="atl">NRV positief op T=20 jaar</span></div><div class="ab">De NRV-analyse toont een positief saldo van ‘+feu(n20)+’ op T=20 jaar (’+Math.round(n20/bvo)+’ €/m² BVO). Direct inzetbaar als financieel argument richting financier, vastgoedbelegger of ESG-rapportage.</div></div>’;
-else adv+=’<div class="ac"><div class="ach"><span class="at warn">Let op</span><span class="atl">NRV negatief op T=20 jaar</span></div><div class="ab">Op T=20 jaar: ‘+feu(n20)+’; op T=35 jaar: ‘+feu(n35)+’. Presenteer dit als verzekeringspremie voor functieverliesrisico. Verhoog herbestemmingskans of verlaag CAPEX-delta om het omslagpunt eerder te bereiken.</div></div>’;
-
-document.getElementById(‘adv’).innerHTML=adv;
-scroll(0,0);
-
-setTimeout(function(){
-var bars=document.querySelectorAll(’.bf’);
-for(var i=0;i<bars.length;i++){
-(function(b){var w=b.style.width;b.style.width=‘0%’;requestAnimationFrame(function(){setTimeout(function(){b.style.width=w;},20);});})(bars[i]);
-}
-},120);
+document.getElementById("result").classList.remove("hidden");
+updateBar();
 }
 </script>
 
