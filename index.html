@@ -1,1 +1,1337 @@
+<!DOCTYPE html>
 
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="EoL Quickscan — ABT Adviseurs in Bouwtechniek. Bepaal de toekomstwaarde van uw bouwproject.">
+<title>EoL Quickscan — ABT Adviseurs in Bouwtechniek</title>
+<style>html,body{background:#fff!important;color:#1a1a2e!important;}</style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+–abt-dark:     #1a1a2e;
+–abt-navy:     #0f2a4a;
+–abt-blue:     #1a4b8c;
+–abt-orange:   #e85c2a;
+–abt-orange-h: #d44d1e;
+–white:        #ffffff;
+–off-white:    #f8f8f6;
+–light:        #f0efec;
+–mid:          #e2e0dc;
+–border:       #d4d2ce;
+–text:         #1a1a2e;
+–text-2:       #3d3d52;
+–text-3:       #6b6b80;
+–text-4:       #9898a8;
+–text-5:       #c4c4ce;
+–c8-teal:      #4dd9d0;
+–c8-green:     #3ecf78;
+–good:         #2a7a4a;
+–good-bg:      #e8f5ee;
+–warn-c:       #b84a00;
+–warn-bg:      #fdf0ea;
+–info-bg:      #eef3fa;
+–sans:  ‘Source Sans 3’, system-ui, -apple-system, sans-serif;
+–serif: ‘Source Serif 4’, Georgia, serif;
+–mono:  ‘JetBrains Mono’, ui-monospace, monospace;
+–r:     4px;
+–r-lg:  8px;
+–sh:    0 1px 3px rgba(26,26,46,0.07), 0 4px 14px rgba(26,26,46,0.05);
+–sh-lg: 0 2px 8px rgba(26,26,46,0.09), 0 8px 28px rgba(26,26,46,0.07);
+–ease:  cubic-bezier(0.4,0,0.2,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+font-family:var(–sans);background:#fff;color:var(–text);
+min-height:100vh;line-height:1.65;
+-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+
+/* ── LAYOUT ─────────────────────────────────── */
+#app{display:flex;flex-direction:column;min-height:100vh;}
+.wrap{max-width:860px;margin:0 auto;padding:0 28px;}
+
+/* ── UTILITY BAR ────────────────────────────── */
+.util-bar{background:var(–abt-dark);border-bottom:1px solid rgba(255,255,255,0.07);}
+.util-inner{
+display:flex;align-items:center;justify-content:space-between;
+height:34px;max-width:1280px;margin:0 auto;padding:0 28px;
+}
+.util-links{display:flex;align-items:center;gap:18px;}
+.util-links a{
+font-size:11.5px;color:rgba(255,255,255,0.45);text-decoration:none;
+transition:color 0.15s;
+}
+.util-links a:hover{color:rgba(255,255,255,0.8);}
+.util-sep{width:1px;height:12px;background:rgba(255,255,255,0.12);}
+.beta-tag{
+font-size:10px;font-weight:600;letter-spacing:0.08em;
+color:white;background:var(–abt-orange);
+padding:2px 7px;border-radius:2px;
+}
+
+/* ── MAIN HEADER ────────────────────────────── */
+.site-header{
+background:var(–white);
+border-bottom:2px solid var(–abt-dark);
+position:sticky;top:0;z-index:100;
+box-shadow:0 2px 10px rgba(26,26,46,0.07);
+}
+.header-wrap{
+display:flex;align-items:center;
+height:68px;gap:0;
+}
+
+.logo-area{
+display:flex;align-items:center;
+padding-right:24px;
+border-right:1px solid var(–border);
+margin-right:22px;flex-shrink:0;
+}
+.logo-area img{
+height:36px;width:auto;
+display:block;
+}
+
+.tool-id{display:flex;flex-direction:column;justify-content:center;}
+.tool-name-txt{font-size:13.5px;font-weight:700;color:var(–text);line-height:1.2;letter-spacing:0.01em;}
+.tool-sub-txt{font-size:11px;color:var(–text-4);font-weight:400;margin-top:1px;letter-spacing:0.01em;}
+
+.hdr-spacer{flex:1;}
+
+/* C8 badge — refined */
+.c8-badge{
+display:flex;align-items:center;gap:9px;
+padding:7px 14px;
+border:1px solid var(–border);border-radius:var(–r);
+background:var(–off-white);
+transition:border-color 0.15s;
+}
+.c8-badge:hover{border-color:var(–c8-teal);}
+.c8-svg{width:20px;height:20px;flex-shrink:0;}
+.c8-txt{font-size:11px;line-height:1.3;color:var(–text-3);}
+.c8-txt strong{display:block;font-size:11.5px;font-weight:600;color:var(–text-2);}
+
+/* ── STEP BAR ───────────────────────────────── */
+.step-bar{
+background:var(–off-white);
+border-bottom:1px solid var(–border);
+display:none;
+}
+.step-bar.show{display:block;}
+.step-bar-wrap{
+display:flex;align-items:stretch;
+height:46px;position:relative;
+}
+.s-item{
+display:flex;align-items:center;gap:9px;flex:1;
+padding:0 14px;font-size:12px;font-weight:500;
+color:var(–text-5);cursor:default;
+border-right:1px solid var(–border);
+transition:color 0.2s,background 0.2s;
+}
+.s-item:last-child{border-right:none;}
+.s-item.active{color:var(–text);background:var(–white);}
+.s-item.done{color:var(–good);}
+.s-num{
+width:20px;height:20px;border-radius:50%;
+border:1.5px solid currentColor;
+display:flex;align-items:center;justify-content:center;
+font-family:var(–mono);font-size:9.5px;font-weight:500;flex-shrink:0;
+}
+.s-item.active .s-num{background:var(–abt-dark);border-color:var(–abt-dark);color:white;}
+.s-item.done .s-num{background:var(–good);border-color:var(–good);color:white;}
+.s-item.done .s-n{display:none;}
+.s-item.done .s-num::after{content:‘✓’;font-size:10px;}
+.step-prog{
+height:2px;background:var(–abt-orange);
+position:absolute;bottom:0;left:0;transition:width 0.45s var(–ease);
+}
+
+/* ── HERO ───────────────────────────────────── */
+.hero{
+background:var(–abt-dark);color:white;
+padding:68px 0 60px;position:relative;overflow:hidden;
+}
+.hero::before{
+content:’’;position:absolute;inset:0;
+background-image:
+linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+background-size:56px 56px;pointer-events:none;
+}
+.hero::after{
+content:’’;position:absolute;top:0;right:0;bottom:0;width:45%;
+background:linear-gradient(120deg,rgba(77,217,208,0.07) 0%,transparent 65%);
+pointer-events:none;
+}
+.hero-c{position:relative;z-index:1;}
+
+/* Eyebrow — elegant italic, not all-caps block */
+.hero-eyebrow{
+display:inline-flex;align-items:center;gap:8px;
+margin-bottom:26px;
+font-family:var(–serif);
+font-style:italic;
+font-size:14px;
+font-weight:300;
+color:rgba(255,255,255,0.55);
+letter-spacing:0.01em;
+}
+.ey-dot{
+width:5px;height:5px;border-radius:50%;background:var(–c8-teal);flex-shrink:0;
+animation:blink 2.8s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+.hero h1{
+font-family:var(–serif);
+font-size:clamp(30px,5vw,52px);
+font-weight:600;line-height:1.08;
+letter-spacing:-0.02em;color:white;
+margin-bottom:20px;
+}
+.hero h1 span{color:var(–c8-teal);}
+
+.hero-lead{
+font-size:16.5px;line-height:1.78;
+color:rgba(255,255,255,0.68);
+max-width:560px;margin-bottom:36px;
+font-weight:300;
+}
+
+/* Method row */
+.method-row{
+display:flex;gap:0;
+border:1px solid rgba(255,255,255,0.09);
+border-radius:var(–r);overflow:hidden;
+max-width:580px;margin-bottom:40px;
+}
+.mc{padding:12px 18px;border-right:1px solid rgba(255,255,255,0.09);}
+.mc:last-child{border-right:none;}
+.mc-lbl{
+font-family:var(–mono);font-size:9px;
+letter-spacing:0.12em;text-transform:uppercase;
+color:var(–c8-teal);opacity:0.75;margin-bottom:4px;
+}
+.mc-val{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.3;}
+
+/* Stats */
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.stat{
+background:rgba(255,255,255,0.055);
+border:1px solid rgba(255,255,255,0.09);
+border-radius:var(–r);padding:10px 16px;text-align:center;
+}
+.stat-n{
+font-family:var(–serif);font-size:22px;font-weight:600;
+color:white;line-height:1;margin-bottom:3px;
+}
+.stat-d{font-size:10.5px;color:rgba(255,255,255,0.45);letter-spacing:0.03em;}
+
+/* CTA — elegant, no all-caps */
+.cta-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+
+.btn-cta{
+display:inline-flex;align-items:center;gap:9px;
+background:var(–abt-orange);color:white;
+font-family:var(–sans);font-size:14px;font-weight:600;
+padding:13px 28px;border-radius:var(–r);border:none;cursor:pointer;
+letter-spacing:0.005em;
+transition:background 0.18s,transform 0.18s,box-shadow 0.18s;
+}
+.btn-cta:hover{
+background:var(–abt-orange-h);transform:translateY(-1px);
+box-shadow:0 5px 18px rgba(232,92,42,0.32);
+}
+.btn-cta svg{width:15px;height:15px;flex-shrink:0;}
+
+.cta-note{
+font-size:12px;color:rgba(255,255,255,0.38);
+display:flex;flex-direction:column;gap:3px;
+}
+.cta-note span{display:flex;align-items:center;gap:5px;}
+.cta-note span::before{content:’·’;opacity:0.5;}
+
+/* ── FEATURES ───────────────────────────────── */
+.feat-band{background:var(–off-white);border-bottom:1px solid var(–border);}
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.feat{
+padding:26px 22px;
+border-right:1px solid var(–border);
+}
+.feat:last-child{border-right:none;}
+.feat-ico{font-size:20px;margin-bottom:10px;display:block;}
+.feat-lbl{
+font-family:var(–mono);font-size:9px;
+letter-spacing:0.12em;text-transform:uppercase;
+color:var(–text-4);margin-bottom:6px;
+}
+.feat-ttl{font-size:13.5px;font-weight:700;color:var(–text);margin-bottom:5px;line-height:1.3;}
+.feat-dsc{font-size:12px;color:var(–text-3);line-height:1.6;}
+
+/* ── DISCLAIMER ─────────────────────────────── */
+.disc-band{padding:14px 0;border-bottom:1px solid var(–border);background:var(–white);}
+.disc-inner{
+display:flex;align-items:flex-start;gap:10px;
+font-size:11.5px;color:var(–text-4);line-height:1.6;
+}
+.disc-inner strong{color:var(–text-3);}
+
+/* ── SCAN BODY ──────────────────────────────── */
+.scan-body{flex:1;padding:36px 0 80px;display:none;}
+
+/* Section cards */
+.sc{
+background:var(–white);border:1px solid var(–border);
+border-radius:var(–r-lg);overflow:hidden;
+margin-bottom:20px;box-shadow:var(–sh);
+}
+.sc-head{
+display:grid;grid-template-columns:auto 1fr auto;
+align-items:center;gap:14px;
+padding:16px 22px;
+background:var(–off-white);border-bottom:1px solid var(–border);
+}
+.dim-pill{
+font-family:var(–mono);font-size:10px;font-weight:500;
+letter-spacing:0.08em;color:var(–abt-blue);
+background:rgba(26,75,140,0.08);border:1px solid rgba(26,75,140,0.14);
+padding:3px 10px;border-radius:2px;white-space:nowrap;
+}
+.sc-ttl{font-size:15.5px;font-weight:700;color:var(–text);line-height:1.2;}
+.sc-dsc{font-size:12px;color:var(–text-3);margin-top:2px;}
+.w-pill{
+font-family:var(–mono);font-size:9.5px;color:var(–text-4);
+border:1px solid var(–border);padding:3px 8px;border-radius:2px;
+background:var(–white);white-space:nowrap;
+}
+.sc-body{padding:24px 22px;}
+
+/* Q groups */
+.qg{margin-bottom:24px;}
+.qg:last-child{margin-bottom:0;}
+.ql{
+font-size:13px;font-weight:700;color:var(–text);
+margin-bottom:5px;display:flex;align-items:center;
+gap:6px;line-height:1.4;flex-wrap:wrap;
+}
+.qh{font-size:11.5px;color:var(–text-4);margin-bottom:10px;line-height:1.5;}
+
+/* Inputs */
+input[type=“text”],input[type=“number”],select,textarea{
+width:100%;background:var(–white);
+border:1.5px solid var(–border);border-radius:var(–r);
+padding:10px 13px;font-family:var(–sans);font-size:13.5px;
+color:var(–text);outline:none;
+transition:border-color 0.15s,box-shadow 0.15s;appearance:none;
+}
+input:focus,select:focus,textarea:focus{
+border-color:var(–abt-blue);
+box-shadow:0 0 0 3px rgba(26,75,140,0.09);
+}
+input::placeholder,textarea::placeholder{color:var(–text-5);}
+select{
+cursor:pointer;
+background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘10’ height=‘6’ fill=‘none’%3E%3Cpath d=‘M1 1l4 4 4-4’ stroke=’%236b6b80’ stroke-width=‘1.5’ stroke-linecap=‘round’/%3E%3C/svg%3E”);
+background-repeat:no-repeat;background-position:right 11px center;padding-right:32px;
+}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.iw{position:relative;}
+.iw input{padding-right:50px;}
+.isuf{
+position:absolute;right:11px;top:50%;transform:translateY(-50%);
+font-family:var(–mono);font-size:10.5px;color:var(–text-4);pointer-events:none;
+}
+
+/* Sliders */
+.sl-wrap{margin-top:2px;}
+.sl-ends{display:flex;justify-content:space-between;margin-bottom:5px;}
+.sl-end{font-size:10.5px;color:var(–text-5);}
+input[type=“range”]{
+width:100%;height:4px;
+background:var(–mid);border-radius:2px;
+outline:none;appearance:none;cursor:pointer;
+border:none;padding:0;box-shadow:none;
+}
+input[type=“range”]:focus{box-shadow:none;border-color:transparent;}
+input[type=“range”]::-webkit-slider-thumb{
+appearance:none;width:19px;height:19px;border-radius:50%;
+background:var(–white);border:2px solid var(–abt-blue);
+box-shadow:0 1px 4px rgba(26,75,140,0.18);cursor:pointer;
+transition:transform 0.14s,border-color 0.14s;
+}
+input[type=“range”]::-webkit-slider-thumb:hover{transform:scale(1.12);}
+input[type=“range”]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:var(–white);border:2px solid var(–abt-blue);cursor:pointer;}
+.sl-readout{display:flex;align-items:baseline;justify-content:space-between;margin-top:9px;}
+.sl-val{font-family:var(–mono);font-size:24px;font-weight:500;color:var(–abt-dark);line-height:1;}
+.sl-desc{
+font-size:12px;color:var(–text-3);text-align:right;
+max-width:220px;line-height:1.4;
+background:var(–off-white);border:1px solid var(–border);
+border-radius:var(–r);padding:3px 9px;
+}
+
+/* Radio options */
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:7px;}
+.rr{display:flex;gap:7px;flex-wrap:wrap;}
+.ro{position:relative;}
+.ro input{position:absolute;opacity:0;width:0;height:0;}
+.ro label{
+display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+padding:11px 13px;background:var(–white);
+border:1.5px solid var(–border);border-radius:var(–r);
+cursor:pointer;transition:all 0.14s var(–ease);
+font-size:12.5px;font-weight:500;color:var(–text-2);line-height:1.3;
+}
+.ro label .ri{font-size:14px;margin-bottom:2px;}
+.ro input:checked + label{
+background:rgba(26,75,140,0.06);border-color:var(–abt-blue);
+color:var(–abt-dark);box-shadow:0 0 0 1px rgba(26,75,140,0.08);
+}
+.ro label:hover:not(:checked + *){border-color:rgba(26,75,140,0.4);}
+.rr .ro label{flex-direction:row;align-items:center;gap:7px;padding:9px 14px;}
+.rr .ro label .ri{font-size:13px;margin-bottom:0;}
+
+/* Tooltip */
+.tp{position:relative;display:inline-flex;}
+.tp-i{
+width:15px;height:15px;border-radius:50%;
+background:var(–light);border:1px solid var(–border);
+display:inline-flex;align-items:center;justify-content:center;
+font-size:9px;font-weight:700;color:var(–text-4);cursor:default;
+}
+.tp-box{
+display:none;position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+background:var(–abt-dark);color:rgba(255,255,255,0.82);
+border-radius:var(–r);padding:9px 13px;
+font-size:11.5px;font-weight:400;width:230px;line-height:1.55;
+z-index:200;pointer-events:none;box-shadow:var(–sh-lg);
+}
+.tp:hover .tp-box{display:block;}
+
+/* Nav buttons — refined, no shouting */
+.nav-row{
+display:flex;align-items:center;justify-content:space-between;
+padding:20px 0 0;gap:10px;
+border-top:1px solid var(–border);margin-top:6px;
+}
+.btn-back{
+display:inline-flex;align-items:center;gap:7px;
+padding:10px 20px;background:var(–white);color:var(–text-3);
+font-family:var(–sans);font-size:13px;font-weight:500;
+border:1.5px solid var(–border);border-radius:var(–r);cursor:pointer;
+transition:border-color 0.15s,color 0.15s;
+}
+.btn-back:hover{border-color:var(–text-3);color:var(–text);}
+.btn-next{
+display:inline-flex;align-items:center;gap:7px;
+padding:10px 24px;background:var(–abt-dark);color:white;
+font-family:var(–sans);font-size:13px;font-weight:600;
+border:none;border-radius:var(–r);cursor:pointer;
+transition:background 0.15s,transform 0.15s,box-shadow 0.15s;
+}
+.btn-next:hover{background:var(–abt-navy);transform:translateY(-1px);box-shadow:var(–sh);}
+.btn-calc{
+display:inline-flex;align-items:center;gap:9px;
+padding:12px 28px;background:var(–abt-orange);color:white;
+font-family:var(–sans);font-size:14px;font-weight:600;
+border:none;border-radius:var(–r);cursor:pointer;
+transition:background 0.18s,transform 0.18s,box-shadow 0.18s;
+}
+.btn-calc:hover{background:var(–abt-orange-h);transform:translateY(-1px);box-shadow:0 4px 14px rgba(232,92,42,0.28);}
+.btn-stripe{display:inline-block;width:2px;height:16px;background:rgba(255,255,255,0.4);border-radius:1px;}
+svg{display:inline-block;vertical-align:middle;}
+
+/* ── RESULT BODY ────────────────────────────── */
+.result-body{flex:1;padding:0 0 80px;display:none;}
+
+.result-top{
+padding:52px 0 44px;border-bottom:1px solid var(–border);margin-bottom:40px;
+}
+.result-grid{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;}
+.eol-glyph{
+width:92px;height:92px;border:2px solid;border-radius:var(–r-lg);
+display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;
+}
+.egl{font-family:var(–serif);font-size:50px;font-weight:600;line-height:1;}
+.egl-sub{font-family:var(–mono);font-size:7.5px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.6;margin-top:2px;}
+.eol-glyph.c-a{border-color:#2a7a4a;color:#2a7a4a;background:#e8f5ee;}
+.eol-glyph.c-b{border-color:var(–abt-blue);color:var(–abt-blue);background:rgba(26,75,140,0.07);}
+.eol-glyph.c-c{border-color:#b84a00;color:#b84a00;background:#fdf0ea;}
+.r-meta{font-family:var(–mono);font-size:10px;letter-spacing:0.1em;color:var(–text-4);text-transform:uppercase;margin-bottom:10px;}
+.r-head{font-family:var(–serif);font-size:clamp(22px,4vw,36px);font-weight:600;line-height:1.15;color:var(–text);margin-bottom:9px;}
+.r-lead{font-size:14.5px;color:var(–text-3);line-height:1.7;max-width:480px;}
+
+/* KPI strip */
+.kpi-strip{
+display:grid;grid-template-columns:repeat(4,1fr);
+gap:1px;background:var(–border);
+border:1px solid var(–border);border-radius:var(–r-lg);
+overflow:hidden;margin-bottom:28px;box-shadow:var(–sh);
+}
+.kpi-c{background:var(–white);padding:18px 16px;}
+.kpi-c.dark{background:var(–abt-dark);}
+.kpi-c.dark .k-lbl{color:rgba(255,255,255,0.4);}
+.kpi-c.dark .k-val{color:var(–c8-teal);}
+.kpi-c.dark .k-sub{color:rgba(255,255,255,0.35);}
+.k-lbl{font-family:var(–mono);font-size:8.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(–text-4);margin-bottom:7px;}
+.k-val{font-family:var(–serif);font-size:28px;font-weight:600;line-height:1;margin-bottom:3px;color:var(–text);}
+.k-sub{font-size:11px;color:var(–text-4);line-height:1.35;}
+
+/* Score table */
+.score-tbl{
+width:100%;border-collapse:collapse;
+border:1px solid var(–border);border-radius:var(–r);overflow:hidden;
+margin-bottom:28px;font-size:13px;box-shadow:var(–sh);
+}
+.score-tbl th{
+font-family:var(–mono);font-size:9px;letter-spacing:0.11em;text-transform:uppercase;
+color:var(–text-3);background:var(–off-white);
+padding:10px 15px;text-align:left;border-bottom:1px solid var(–border);font-weight:500;
+}
+.score-tbl td{padding:11px 15px;border-bottom:1px solid var(–light);vertical-align:middle;}
+.score-tbl tr:last-child td{border-bottom:none;}
+.score-tbl tbody tr:hover td{background:rgba(248,248,246,0.7);}
+.td-d{font-weight:700;color:var(–text);}
+.td-w{font-family:var(–mono);font-size:10.5px;color:var(–text-4);}
+.td-s{font-family:var(–mono);font-weight:500;font-size:14px;}
+.bar-w{display:flex;align-items:center;gap:8px;min-width:120px;}
+.bar-bg{flex:1;height:4px;background:var(–light);border-radius:2px;overflow:hidden;}
+.bar-f{height:100%;border-radius:2px;transition:width 0.9s var(–ease) 0.3s;}
+
+/* NRV panel */
+.nrv-panel{
+display:grid;grid-template-columns:1fr 1fr;
+gap:1px;background:var(–border);
+border:1px solid var(–border);border-radius:var(–r-lg);
+overflow:hidden;margin-bottom:28px;box-shadow:var(–sh);
+}
+.nrv-c{background:var(–white);padding:26px 22px;}
+.nrv-c.dark{background:var(–abt-dark);}
+.nrv-c.dark .nrv-lbl{color:rgba(255,255,255,0.38);}
+.nrv-c.dark .nrv-dtl{color:rgba(255,255,255,0.5);}
+.nrv-lbl{font-family:var(–mono);font-size:8.5px;letter-spacing:0.13em;text-transform:uppercase;color:var(–text-4);margin-bottom:11px;}
+.nrv-fig{font-family:var(–serif);font-size:36px;font-weight:600;line-height:1;margin-bottom:7px;}
+.nrv-c.dark .nrv-fig{color:var(–c8-teal);}
+.nrv-fig.pos{color:var(–good);}
+.nrv-fig.neg{color:var(–warn-c);}
+.nrv-dtl{font-size:12px;color:var(–text-3);line-height:1.6;}
+
+/* Advice cards */
+.adv-hdr{
+font-family:var(–serif);font-size:19px;font-weight:600;
+color:var(–text);margin:40px 0 14px;padding-bottom:11px;
+border-bottom:2px solid var(–abt-dark);
+display:flex;align-items:baseline;gap:10px;
+}
+.adv-hdr small{
+font-family:var(–serif);font-style:italic;font-size:13px;
+color:var(–text-4);font-weight:300;
+}
+.adv-card{
+border:1px solid var(–border);border-radius:var(–r);
+overflow:hidden;margin-bottom:8px;background:var(–white);
+box-shadow:0 1px 3px rgba(26,26,46,0.04);
+transition:box-shadow 0.18s;
+}
+.adv-card:hover{box-shadow:var(–sh);}
+.adv-head{
+display:flex;align-items:center;gap:10px;
+padding:10px 16px;border-bottom:1px solid var(–light);
+background:var(–off-white);
+}
+.adv-tag{
+font-family:var(–mono);font-size:8.5px;letter-spacing:0.1em;text-transform:uppercase;
+padding:2px 7px;border-radius:2px;font-weight:600;white-space:nowrap;
+}
+.adv-tag.pos{background:var(–good-bg);color:var(–good);}
+.adv-tag.warn{background:var(–warn-bg);color:var(–warn-c);}
+.adv-tag.info{background:var(–info-bg);color:var(–abt-blue);}
+.adv-ttl{font-size:13px;font-weight:700;color:var(–text);}
+.adv-body{padding:13px 16px;font-size:12.5px;color:var(–text-3);line-height:1.75;}
+
+/* Result actions */
+.r-acts{
+display:flex;gap:8px;flex-wrap:wrap;
+margin-top:36px;padding-top:28px;border-top:1px solid var(–border);
+}
+.btn-act{
+display:inline-flex;align-items:center;gap:7px;
+padding:9px 18px;font-family:var(–sans);font-size:12.5px;font-weight:500;
+border-radius:var(–r);cursor:pointer;
+border:1.5px solid var(–border);background:var(–white);
+color:var(–text-2);transition:all 0.15s;
+}
+.btn-act:hover{border-color:var(–text-3);background:var(–off-white);}
+.btn-act.primary{background:var(–abt-orange);color:white;border-color:var(–abt-orange);}
+.btn-act.primary:hover{background:var(–abt-orange-h);}
+
+/* ── FOOTER ─────────────────────────────────── */
+footer{background:var(–abt-dark);color:rgba(255,255,255,0.45);padding:28px 0;margin-top:auto;}
+.ft-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.ft-l{font-size:11.5px;line-height:1.75;}
+.ft-l a{color:rgba(255,255,255,0.45);text-decoration:none;}
+.ft-l a:hover{color:rgba(255,255,255,0.8);}
+.ft-l strong{color:rgba(255,255,255,0.7);}
+.ft-r{font-family:var(–mono);font-size:9.5px;letter-spacing:0.07em;color:rgba(255,255,255,0.25);text-align:right;line-height:1.65;}
+
+/* ── RESPONSIVE ─────────────────────────────── */
+@media(max-width:660px){
+.feats{grid-template-columns:1fr 1fr;}
+.feat:nth-child(2n){border-right:none;}
+.feat{border-bottom:1px solid var(–border);}
+.r2{grid-template-columns:1fr;}
+.kpi-strip{grid-template-columns:1fr 1fr;}
+.nrv-panel{grid-template-columns:1fr;}
+.result-grid{grid-template-columns:1fr;}
+.method-row{flex-direction:column;}
+.mc{border-right:none;border-bottom:1px solid rgba(255,255,255,0.09);}
+.c8-badge{display:none;}
+.util-bar{display:none;}
+.nav-row{flex-direction:column-reverse;}
+.btn-back,.btn-next,.btn-calc{width:100%;justify-content:center;}
+.s-item .s-lbl{display:none;}
+}
+@media print{
+.site-header,.step-bar,.util-bar,.r-acts,.nav-row,footer{display:none!important;}
+.scan-body,.result-body{padding-top:20px!important;}
+}
+</style>
+
+</head>
+<body>
+<div id="app">
+
+<!-- UTILITY BAR -->
+
+<div class="util-bar">
+  <div class="util-inner">
+    <div class="util-links">
+      <a href="https://abt.eu" target="_blank">abt.eu</a>
+      <div class="util-sep"></div>
+      <a href="https://abt.eu/over-abt/kennisgebieden/" target="_blank">Kennisgebieden</a>
+      <div class="util-sep"></div>
+      <a href="https://abt.eu/contact/" target="_blank">Contact</a>
+      <div class="util-sep"></div>
+      <a href="mailto:info@abt.eu">info@abt.eu</a>
+    </div>
+    <span class="beta-tag">Beta v1.3</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="header-wrap">
+      <div class="logo-area">
+        <!-- ABT logo PNG from seeklogo -->
+        <img
+          src="https://images.seeklogo.com/logo-png/0/3/abt-logo-png_seeklogo-2170.png"
+          alt="ABT Adviseurs in bouwtechniek"
+          onerror="this.style.display='none';document.getElementById('abt-fallback').style.display='block';"
+        >
+        <!-- fallback SVG wordmark if PNG fails -->
+        <svg id="abt-fallback" style="display:none;height:34px;width:auto;" viewBox="0 0 140 42" fill="none">
+          <text x="0" y="32" font-family="'Source Sans 3',system-ui,sans-serif" font-weight="700" font-size="36" fill="#1a1a2e" letter-spacing="-0.5">ABT</text>
+          <text x="1" y="41" font-family="'Source Sans 3',system-ui,sans-serif" font-weight="400" font-size="8.5" fill="#9898a8" letter-spacing="0.3">adviseurs in bouwtechniek</text>
+        </svg>
+      </div>
+
+```
+  <div class="tool-id">
+    <div class="tool-name-txt">EoL Quickscan</div>
+    <div class="tool-sub-txt">End-of-Life toekomstwaarde analyse</div>
+  </div>
+
+  <div class="hdr-spacer"></div>
+
+  <div class="c8-badge">
+    <svg class="c8-svg" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8.5" stroke="rgba(77,217,208,0.18)" stroke-width="1"/>
+      <ellipse cx="10" cy="10" rx="5.5" ry="3.5" stroke="#4dd9d0" stroke-width="1" opacity="0.85">
+        <animateTransform attributeName="transform" type="rotate" from="0 10 10" to="360 10 10" dur="9s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="10" cy="10" rx="8" ry="4.5" stroke="#4dd9d0" stroke-width="0.6" opacity="0.35" transform="rotate(50 10 10)"/>
+      <circle cx="10" cy="10" r="1.8" fill="#4dd9d0"/>
+    </svg>
+    <div class="c8-txt"><strong>circle 8</strong>solutions</div>
+  </div>
+</div>
+```
+
+  </div>
+</header>
+
+<!-- STEP BAR -->
+
+<div class="step-bar" id="step-bar">
+  <div class="wrap">
+    <div class="step-bar-wrap">
+      <div class="s-item active" id="tab-0"><div class="s-num"><span class="s-n">1</span></div><span class="s-lbl">Projectgegevens</span></div>
+      <div class="s-item" id="tab-1"><div class="s-num"><span class="s-n">2</span></div><span class="s-lbl">Constructie</span></div>
+      <div class="s-item" id="tab-2"><div class="s-num"><span class="s-n">3</span></div><span class="s-lbl">Materiaal</span></div>
+      <div class="s-item" id="tab-3"><div class="s-num"><span class="s-n">4</span></div><span class="s-lbl">Financieel</span></div>
+      <div class="step-prog" id="sprog" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── INTRO ─── -->
+
+<div id="intro">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-c">
+        <div class="hero-eyebrow">
+          <div class="ey-dot"></div>
+          End-of-Life Quickscan — instrument voor beslissingsmakers in de bouw
+        </div>
+        <h1>Hoe toekomstbestendig<br>is uw <span>bouwproject</span>?</h1>
+        <p class="hero-lead">Beantwoord zestien gerichte vragen en ontvang direct uw EoL-klasse, een kwantitatieve restwaarde-indicatie op T=20 en T=35 jaar, en specifieke constructieve aanbevelingen — onderbouwd door NEN-normen en sectorkengetallen.</p>
+
+```
+    <div class="method-row">
+      <div class="mc"><div class="mc-lbl">Norm</div><div class="mc-val">NEN 10150</div></div>
+      <div class="mc"><div class="mc-lbl">Kengetallen</div><div class="mc-val">MSCI / IPD</div></div>
+      <div class="mc"><div class="mc-lbl">Kader</div><div class="mc-val">Paris Proof 2050</div></div>
+      <div class="mc"><div class="mc-lbl">Subsidies</div><div class="mc-val">MIA / Vamil</div></div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">16</div><div class="stat-d">vragen</div></div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-d">dimensies</div></div>
+      <div class="stat"><div class="stat-n">~12</div><div class="stat-d">minuten</div></div>
+      <div class="stat"><div class="stat-n">€/m²</div><div class="stat-d">NRV output</div></div>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn-cta" onclick="startScan()">
+        Start de scan
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="cta-note">
+        <span>Geschikt voor SO, VO, DO en TO-fase</span>
+        <span>Geen data opgeslagen — volledig lokaal</span>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <div class="feat-band">
+    <div class="wrap">
+      <div class="feats">
+        <div class="feat"><span class="feat-ico">📐</span><div class="feat-lbl">01 — Scoringssysteem</div><div class="feat-ttl">4 gewogen dimensies</div><div class="feat-dsc">Constructieve flexibiliteit (30%), ontkoppelbaarheid (30%), materiaaldocumentatie (20%), herbestemmingspotentie (20%).</div></div>
+        <div class="feat"><span class="feat-ico">💶</span><div class="feat-lbl">02 — Financiële output</div><div class="feat-ttl">NRV in € en €/m² BVO</div><div class="feat-dsc">Netto Restwaardevoordeel op T=20 en T=35 jaar. Direct inzetbaar in een financieringsaanvraag of taxatierapport.</div></div>
+        <div class="feat"><span class="feat-ico">⚗️</span><div class="feat-lbl">03 — Methodologie</div><div class="feat-ttl">Wetenschappelijk onderbouwd</div><div class="feat-dsc">NEN 10150, IPD/MSCI, Paris Proof 2050 en EU Taxonomy circulaire criteria. Onafhankelijk ontwikkeld door ABT.</div></div>
+        <div class="feat"><span class="feat-ico">🔒</span><div class="feat-lbl">04 — Privacy</div><div class="feat-ttl">Volledig lokaal</div><div class="feat-dsc">Alle berekeningen vinden lokaal in uw browser plaats. Geen projectdata wordt verstuurd of opgeslagen.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disc-band">
+    <div class="wrap">
+      <div class="disc-inner">
+        <span>⚠️</span>
+        <div><strong>Disclaimer:</strong> Dit instrument levert indicatieve resultaten op basis van uw invoer en sectorgemiddelden. De uitkomsten zijn bedoeld als gespreksbasis en vervangen geen formeel haalbaarheidsonderzoek of taxatie. ABT en Circle 8 Solutions aanvaarden geen aansprakelijkheid voor beslissingen genomen op basis van dit prototype (v1.3).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SCAN FORM ─── -->
+
+<div class="scan-body" id="scan-body">
+  <div class="wrap">
+
+```
+<!-- STAP 1 -->
+<div class="form-step active" id="step-0">
+  <div class="sc">
+    <div class="sc-head">
+      <div class="dim-pill">Projectdata</div>
+      <div><div class="sc-ttl">Projectidentificatie</div><div class="sc-dsc">Basisgegevens voor rapportgeneratie en kalibratie van sectorkengetallen</div></div>
+      <div class="w-pill">stap 1 / 4</div>
+    </div>
+    <div class="sc-body">
+      <div class="qg">
+        <div class="ql">Projectnaam</div>
+        <input type="text" id="q_pnaam" placeholder="bijv. Koelhal Logistics Park Tilburg, fase 2">
+      </div>
+      <div class="qg">
+        <div class="ql">Gebouwtype <div class="tp"><div class="tp-i">?</div><div class="tp-box">Het gebouwtype bepaalt welke sectorspecifieke kengetallen de scan gebruikt voor de NRV-berekening.</div></div></div>
+        <div class="rg">
+          <div class="ro"><input type="radio" name="gtype" id="gt1" value="koel" checked><label for="gt1"><span class="ri">❄️</span>Koellogistiek</label></div>
+          <div class="ro"><input type="radio" name="gtype" id="gt2" value="zorg"><label for="gt2"><span class="ri">🏥</span>Zorghuisvesting</label></div>
+          <div class="ro"><input type="radio" name="gtype" id="gt3" value="ind"><label for="gt3"><span class="ri">🏭</span>Industrieel</label></div>
+          <div class="ro"><input type="radio" name="gtype" id="gt4" value="util"><label for="gt4"><span class="ri">🏢</span>Utiliteit</label></div>
+        </div>
+      </div>
+      <div class="r2">
+        <div class="qg"><div class="ql">Bruto vloeroppervlak (BVO)</div><div class="iw"><input type="number" id="q_bvo" placeholder="5000" min="100"><span class="isuf">m²</span></div></div>
+        <div class="qg"><div class="ql">Constructieve CAPEX (indicatief)</div><div class="iw"><input type="number" id="q_capex" placeholder="2500000" min="0"><span class="isuf">€</span></div></div>
+      </div>
+      <div class="r2">
+        <div class="qg"><div class="ql">Geplande oplevering</div><input type="number" id="q_opl" placeholder="2026" min="2024" max="2042"></div>
+        <div class="qg"><div class="ql">Huidige ontwerpfase</div>
+          <select id="q_fase">
+            <option value="SO">Structuurontwerp (SO)</option>
+            <option value="VO" selected>Voorlopig Ontwerp (VO)</option>
+            <option value="DO">Definitief Ontwerp (DO)</option>
+            <option value="TO">Technisch Ontwerp (TO)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="toIntro()"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Terug naar start</button>
+    <button class="btn-next" onclick="go(1)">Constructieve flexibiliteit<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</div>
+
+<!-- STAP 2 -->
+<div class="form-step" id="step-1">
+  <div class="sc">
+    <div class="sc-head">
+      <div class="dim-pill">D1 — Flexibiliteit</div>
+      <div><div class="sc-ttl">Constructieve Flexibiliteit</div><div class="sc-dsc">Hoe adaptief is de draagstructuur voor toekomstige functionele wijzigingen?</div></div>
+      <div class="w-pill">gewicht 30%</div>
+    </div>
+    <div class="sc-body">
+      <div class="qg">
+        <div class="ql">Kolomraster <div class="tp"><div class="tp-i">?</div><div class="tp-box">Scores: &lt;1.000 m²/kol → 1 · 1.000–1.499 → 2 · 1.500–1.999 → 3 · 2.000–2.499 → 4 · ≥2.500 → 5</div></div></div>
+        <div class="qh">Netto vloeroppervlak per constructiekolom</div>
+        <div class="iw" style="max-width:190px;"><input type="number" id="q_kolom" placeholder="1500" min="100" max="10000"><span class="isuf">m²/kol</span></div>
+      </div>
+      <div class="qg">
+        <div class="ql">Vrije hoogte vs. functionele minimumeis <div class="tp"><div class="tp-i">?</div><div class="tp-box">1 = exact minimum. 5 = ≥1,5× de functionele eis — extra verdieping of andere bestemming haalbaar zonder structurele ingreep.</div></div></div>
+        <div class="sl-wrap">
+          <div class="sl-ends"><span class="sl-end">Exact minimum</span><span class="sl-end">Ruim surplus</span></div>
+          <input type="range" id="q_hoogte" min="1" max="5" step="1" value="3" oninput="doSl(this,'sl_h',['Exact op minimum','Beperkte marge','Enige marge','Goede marge','Ruim surplus'])">
+          <div class="sl-readout"><span class="sl-val" id="sl_h_v">3</span><span class="sl-desc" id="sl_h_d">Enige marge</span></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Vloerbelastingscapaciteit-reserve <div class="tp"><div class="tp-i">?</div><div class="tp-box">1 = ontworpen op exact de huidige exploitatielast. 5 = ≥30% structurele reserve.</div></div></div>
+        <div class="sl-wrap">
+          <div class="sl-ends"><span class="sl-end">Geen reserve</span><span class="sl-end">≥30% reserve</span></div>
+          <input type="range" id="q_belasting" min="1" max="5" step="1" value="3" oninput="doSl(this,'sl_b',['Geen reserve','&lt;10%','10–20%','20–30%','≥30%'])">
+          <div class="sl-readout"><span class="sl-val" id="sl_b_v">3</span><span class="sl-desc" id="sl_b_d">10–20%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sc">
+    <div class="sc-head">
+      <div class="dim-pill">D2 — Ontkoppeling</div>
+      <div><div class="sc-ttl">Ontkoppelbaarheid</div><div class="sc-dsc">Kan de installatie worden vervangen zonder ingreep in de draagstructuur?</div></div>
+      <div class="w-pill">gewicht 30%</div>
+    </div>
+    <div class="sc-body">
+      <div class="qg">
+        <div class="ql">Ingrepen bij volledige installatievervanging <div class="tp"><div class="tp-i">?</div><div class="tp-box">1 = installatie volledig verweven met constructie. 5 = volledig demontabel zonder enige structurele ingreep.</div></div></div>
+        <div class="sl-wrap">
+          <div class="sl-ends"><span class="sl-end">Volledig verweven</span><span class="sl-end">Volledig demontabel</span></div>
+          <input type="range" id="q_ontk" min="1" max="5" step="1" value="3" oninput="doSl(this,'sl_o',['Volledig verweven','Sterk verweven','Gedeeltelijk ontkoppeld','Grotendeels ontkoppeld','Volledig demontabel'])">
+          <div class="sl-readout"><span class="sl-val" id="sl_o_v">3</span><span class="sl-desc" id="sl_o_d">Gedeeltelijk ontkoppeld</span></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Zone-onafhankelijkheid installatieschachten <div class="tp"><div class="tp-i">?</div><div class="tp-box">Kunnen zones onafhankelijk worden aangepast? 1 = één centraal niet-opdeelbaar systeem.</div></div></div>
+        <div class="sl-wrap">
+          <div class="sl-ends"><span class="sl-end">Centraal systeem</span><span class="sl-end">Volledig zonair</span></div>
+          <input type="range" id="q_sch" min="1" max="5" step="1" value="2" oninput="doSl(this,'sl_s',['Centraal systeem','Beperkt opdeelbaar','Gedeeltelijk zonair','Grotendeels zonair','Volledig zone-onafhankelijk'])">
+          <div class="sl-readout"><span class="sl-val" id="sl_s_v">2</span><span class="sl-desc" id="sl_s_d">Beperkt opdeelbaar</span></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Toegankelijke vloeropbouwen voor leidingvervanging?</div>
+        <div class="rr">
+          <div class="ro"><input type="radio" name="vloer" id="vl1" value="1"><label for="vl1"><span class="ri">✗</span>Nee</label></div>
+          <div class="ro"><input type="radio" name="vloer" id="vl2" value="2"><label for="vl2"><span class="ri">◑</span>Deels</label></div>
+          <div class="ro"><input type="radio" name="vloer" id="vl3" value="4" checked><label for="vl3"><span class="ri">✓</span>Grotendeels</label></div>
+          <div class="ro"><input type="radio" name="vloer" id="vl4" value="5"><label for="vl4"><span class="ri">★</span>Volledig</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="go(0)"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Vorige</button>
+    <button class="btn-next" onclick="go(2)">Materiaal &amp; herbestemming<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</div>
+
+<!-- STAP 3 -->
+<div class="form-step" id="step-2">
+  <div class="sc">
+    <div class="sc-head">
+      <div class="dim-pill">D3 — Materiaal</div>
+      <div><div class="sc-ttl">Materiaaldocumentatie</div><div class="sc-dsc">Is het toekomstig hergebruik van materialen geborgd door documentatie?</div></div>
+      <div class="w-pill">gewicht 20%</div>
+    </div>
+    <div class="sc-body">
+      <div class="qg">
+        <div class="ql">% constructieve elementen gedocumenteerd <div class="tp"><div class="tp-i">?</div><div class="tp-box">Zijn materiaalkwaliteit (S355, C30/37), profieltype en verbindingstechniek per element vastgelegd in het constructief eindrapport?</div></div></div>
+        <div class="qh">Type, kwaliteit en verbindingstechniek per element</div>
+        <div class="sl-wrap">
+          <div class="sl-ends"><span class="sl-end">0%</span><span class="sl-end">100%</span></div>
+          <input type="range" id="q_doc" min="0" max="100" step="10" value="30" oninput="doSlPct(this,'sl_d')">
+          <div class="sl-readout"><span class="sl-val" id="sl_d_v">30%</span><span class="sl-desc" id="sl_d_d">Basisregistratie</span></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Materiaalpassport status</div>
+        <div class="rg">
+          <div class="ro"><input type="radio" name="mpp" id="m1" value="1" checked><label for="m1"><span class="ri">✗</span>Niet aanwezig</label></div>
+          <div class="ro"><input type="radio" name="mpp" id="m2" value="2"><label for="m2"><span class="ri">◷</span>Gepland</label></div>
+          <div class="ro"><input type="radio" name="mpp" id="m3" value="4"><label for="m3"><span class="ri">◑</span>Gedeeltelijk</label></div>
+          <div class="ro"><input type="radio" name="mpp" id="m4" value="5"><label for="m4"><span class="ri">★</span>Volledig</label></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Verbindingstechnieken: demontabiliteit <div class="tp"><div class="tp-i">?</div><div class="tp-box">1 = volledig ingestort/gelijmd. 5 = volledig demontabel (geschroefde flensverbindingen HV-bouten, NEN-EN 1090 EXC2).</div></div></div>
+        <div class="sl-wrap">
+          <div class="sl-ends"><span class="sl-end">Volledig ingestort</span><span class="sl-end">Volledig demontabel</span></div>
+          <input type="range" id="q_verb" min="1" max="5" step="1" value="2" oninput="doSl(this,'sl_v',['Volledig ingestort','Overwegend monolithisch','Mix monolithisch/demontabel','Overwegend demontabel','Volledig demontabel'])">
+          <div class="sl-readout"><span class="sl-val" id="sl_v_v">2</span><span class="sl-desc" id="sl_v_d">Overwegend monolithisch</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sc">
+    <div class="sc-head">
+      <div class="dim-pill">D4 — Herbestemming</div>
+      <div><div class="sc-ttl">Herbestemmingspotentie</div><div class="sc-dsc">Hoeveel alternatieve bestemmingen zijn haalbaar zonder draagstructuurwijziging?</div></div>
+      <div class="w-pill">gewicht 20%</div>
+    </div>
+    <div class="sc-body">
+      <div class="qg">
+        <div class="ql">Haalbare alternatieve bestemmingen <div class="tp"><div class="tp-i">?</div><div class="tp-box">Logistiek, lichte industrie, datacentrum, stadslandbouw, retail, wonen — elke haalbare bestemming zonder constructieve ingreep telt als +1.</div></div></div>
+        <div class="rr">
+          <div class="ro"><input type="radio" name="hb" id="hb0" value="1" checked><label for="hb0"><span class="ri">0</span>Geen</label></div>
+          <div class="ro"><input type="radio" name="hb" id="hb1" value="2"><label for="hb1"><span class="ri">1</span>1 optie</label></div>
+          <div class="ro"><input type="radio" name="hb" id="hb2" value="3"><label for="hb2"><span class="ri">2</span>2 opties</label></div>
+          <div class="ro"><input type="radio" name="hb" id="hb3" value="5"><label for="hb3"><span class="ri">≥3</span>3+ opties</label></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Gevelschil: onafhankelijk vervangbaar? <div class="tp"><div class="tp-i">?</div><div class="tp-box">Kan de gevel per segment worden vervangen zonder steigers binnenshuis en zonder structurele ingreep?</div></div></div>
+        <div class="rr">
+          <div class="ro"><input type="radio" name="gvl" id="gv1" value="1"><label for="gv1"><span class="ri">✗</span>Nee</label></div>
+          <div class="ro"><input type="radio" name="gvl" id="gv2" value="2"><label for="gv2"><span class="ri">◑</span>Deels</label></div>
+          <div class="ro"><input type="radio" name="gvl" id="gv3" value="4" checked><label for="gv3"><span class="ri">✓</span>Grotendeels</label></div>
+          <div class="ro"><input type="radio" name="gvl" id="gv4" value="5"><label for="gv4"><span class="ri">★</span>Volledig segmentair</label></div>
+        </div>
+      </div>
+      <div class="qg">
+        <div class="ql">Locatie-index <div class="tp"><div class="tp-i">?</div><div class="tp-box">Inbreidingslocaties dichtbij stedelijk gebied bieden significant meer herbestemmingskansen dan monofunctionele bedrijventerreinen.</div></div></div>
+        <div class="rr">
+          <div class="ro"><input type="radio" name="loc" id="lo1" value="1"><label for="lo1"><span class="ri">▪</span>Monofunctioneel</label></div>
+          <div class="ro"><input type="radio" name="loc" id="lo2" value="3" checked><label for="lo2"><span class="ri">◈</span>Gemengd terrein</label></div>
+          <div class="ro"><input type="radio" name="loc" id="lo3" value="5"><label for="lo3"><span class="ri">◉</span>Stedelijke inbreiding</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="go(1)"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Vorige</button>
+    <button class="btn-next" onclick="go(3)">Financiële parameters<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</div>
+
+<!-- STAP 4 -->
+<div class="form-step" id="step-3">
+  <div class="sc">
+    <div class="sc-head">
+      <div class="dim-pill">NRV — Financieel</div>
+      <div><div class="sc-ttl">Financiële parameters</div><div class="sc-dsc">Kalibreer de restwaarde-berekening op uw project. Standaardwaarden zijn sectorgemiddelden.</div></div>
+      <div class="w-pill">stap 4 / 4</div>
+    </div>
+    <div class="sc-body">
+      <div class="r2">
+        <div class="qg"><div class="ql">CAPEX-delta toekomstbestendigheid <div class="tp"><div class="tp-i">?</div><div class="tp-box">Meerkosten voor adaptief ontwerp. Typisch 2–6% van constructieve CAPEX.</div></div></div><div class="iw"><input type="number" id="q_dcapex" value="4" min="0" max="20"><span class="isuf">%</span></div></div>
+        <div class="qg"><div class="ql">Discontovoet <div class="tp"><div class="tp-i">?</div><div class="tp-box">Standaard 5% commercieel. Zorgvastgoed NHC: 3–4%. Institutioneel: 4–5%.</div></div></div><div class="iw"><input type="number" id="q_disc" value="5" min="1" max="15"><span class="isuf">%</span></div></div>
+      </div>
+      <div class="r2">
+        <div class="qg"><div class="ql">Herbestemmingskans T=20 jr <div class="tp"><div class="tp-i">?</div><div class="tp-box">Sectorgemiddelden: koellogistiek 25–35% · zorghuisvesting 15–20% · utiliteit 30–45%.</div></div></div><div class="iw"><input type="number" id="q_k20" value="30" min="0" max="100"><span class="isuf">%</span></div></div>
+        <div class="qg"><div class="ql">Herbestemmingskans T=35 jr</div><div class="iw"><input type="number" id="q_k35" value="60" min="0" max="100"><span class="isuf">%</span></div></div>
+      </div>
+      <div class="r2">
+        <div class="qg"><div class="ql">Sloopkostenbesparing <div class="tp"><div class="tp-i">?</div><div class="tp-box">Reductie door betere documentatie en demontabiliteit. NEN 10150. Typisch €15–45/m² BVO.</div></div></div><div class="iw"><input type="number" id="q_slp" value="25" min="0" max="200"><span class="isuf">€/m²</span></div></div>
+        <div class="qg"><div class="ql">Herbestemmingsmeerwaarde <div class="tp"><div class="tp-i">?</div><div class="tp-box">Verschil vastgoedwaarde bij geslaagde herbestemming t.o.v. sloopwaarde. BAR-kengetallen: €150–600/m² BVO.</div></div></div><div class="iw"><input type="number" id="q_hbw" value="300" min="0" max="2000"><span class="isuf">€/m²</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="go(2)"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Vorige</button>
+    <button class="btn-calc" onclick="doCalc()"><span class="btn-stripe"></span>Bereken EoL-score &amp; restwaarde</button>
+  </div>
+</div>
+```
+
+  </div>
+</div><!-- /scan-body -->
+
+<!-- ─── RESULTS ─── -->
+
+<div class="result-body" id="result-body">
+  <div class="wrap">
+    <div class="result-top">
+      <div class="result-grid">
+        <div class="eol-glyph" id="egl">
+          <span class="egl" id="egl-l">A</span>
+          <span class="egl-sub">EoL-klasse</span>
+        </div>
+        <div>
+          <div class="r-meta" id="r-meta">—</div>
+          <h2 class="r-head" id="r-head">—</h2>
+          <p class="r-lead" id="r-lead">—</p>
+        </div>
+      </div>
+    </div>
+
+```
+<div class="kpi-strip" id="kpi-strip"></div>
+
+<table class="score-tbl">
+  <thead><tr><th>Dimensie</th><th>Gewicht</th><th>Score / 20</th><th style="min-width:130px;">Verdeling</th></tr></thead>
+  <tbody id="s-tbody"></tbody>
+</table>
+
+<div class="nrv-panel">
+  <div class="nrv-c dark">
+    <div class="nrv-lbl">Netto Restwaardevoordeel — T=20 jaar</div>
+    <div class="nrv-fig" id="nrv20">—</div>
+    <div class="nrv-dtl" id="nrv20d">—</div>
+  </div>
+  <div class="nrv-c">
+    <div class="nrv-lbl">Netto Restwaardevoordeel — T=35 jaar</div>
+    <div class="nrv-fig" id="nrv35">—</div>
+    <div class="nrv-dtl" id="nrv35d">—</div>
+  </div>
+</div>
+
+<div class="adv-hdr">Constructieve aanbevelingen <small>op basis van uw projectscores</small></div>
+<div id="adv-cont"></div>
+
+<div class="r-acts">
+  <button class="btn-act" onclick="window.print()"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 6V2h8v4M4 12H2V7h12v5h-2M4 12v3h8v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Opslaan als pdf</button>
+  <button class="btn-act" onclick="doRestart()"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2.5 8a5.5 5.5 0 1 1 1 3.2M2.5 11V8h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Nieuwe scan starten</button>
+  <button class="btn-act primary" onclick="doContact()">Vraag verdiepingsadvies aan bij ABT<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="wrap">
+    <div class="ft-inner">
+      <div class="ft-l">
+        <strong>ABT Adviseurs in bouwtechniek</strong><br>
+        Velperweg 37, 6824 BE Velp · Postbus 82, 6800 AB Arnhem<br>
+        <a href="tel:+31263690200">+31 (0)26 369 02 00</a> ·
+        <a href="mailto:info@abt.eu">info@abt.eu</a> ·
+        <a href="https://abt.eu" target="_blank">abt.eu</a><br>
+        EoL Quickscan in samenwerking met <a href="https://circle8solutions.com" target="_blank">Circle 8 Solutions</a> ·
+        Methodiek: NEN 10150 · MSCI/IPD · Paris Proof 2050
+      </div>
+      <div class="ft-r">
+        v1.3 Prototype<br>
+        © 2026 ABT B.V.<br>
+        Alle rechten voorbehouden
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /app -->
+
+<script>
+// ── STATE ──────────────────────────────────────────────────
+var cur = 0;
+
+// ── NAVIGATION ─────────────────────────────────────────────
+function startScan() {
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('scan-body').style.display = 'block';
+  document.getElementById('step-bar').classList.add('show');
+  cur = 0;
+  syncTabs();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toIntro() {
+  document.getElementById('intro').style.display = 'block';
+  document.getElementById('scan-body').style.display = 'none';
+  document.getElementById('step-bar').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(n) {
+  document.getElementById('step-' + cur).classList.remove('active');
+  cur = n;
+  document.getElementById('step-' + cur).classList.add('active');
+  syncTabs();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function syncTabs() {
+  for (var i = 0; i < 4; i++) {
+    var t = document.getElementById('tab-' + i);
+    t.classList.remove('active', 'done');
+    if (i < cur) t.classList.add('done');
+    else if (i === cur) t.classList.add('active');
+  }
+  document.getElementById('sprog').style.width = (((cur + 1) / 4) * 100) + '%';
+}
+
+function doRestart() {
+  document.getElementById('result-body').style.display = 'none';
+  document.getElementById('step-bar').classList.remove('show');
+  toIntro();
+}
+
+function doContact() {
+  window.open('https://abt.eu/contact/', '_blank');
+}
+
+// ── SLIDERS ────────────────────────────────────────────────
+function doSl(el, id, labs) {
+  var v = parseInt(el.value);
+  document.getElementById(id + '_v').textContent = v;
+  document.getElementById(id + '_d').textContent = labs[v - 1] || '';
+  var p = ((v - 1) / 4) * 100;
+  el.style.background = 'linear-gradient(to right,#1a4b8c 0%,#1a4b8c ' + p + '%,#e2e0dc ' + p + '%)';
+}
+
+function doSlPct(el, id) {
+  var v = parseInt(el.value);
+  document.getElementById(id + '_v').textContent = v + '%';
+  var d = 'Geen documentatie';
+  if (v >= 80) d = 'Uitgebreide documentatie';
+  else if (v >= 60) d = 'Goede documentatie';
+  else if (v >= 40) d = 'Redelijke documentatie';
+  else if (v >= 20) d = 'Basisregistratie';
+  document.getElementById(id + '_d').textContent = d;
+  el.style.background = 'linear-gradient(to right,#1a4b8c 0%,#1a4b8c ' + v + '%,#e2e0dc ' + v + '%)';
+}
+
+// ── HELPERS ────────────────────────────────────────────────
+function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function getInt(id) { return parseInt(document.getElementById(id).value) || 0; }
+function getRadio(name, def) {
+  var el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? parseInt(el.value) : def;
+}
+function fmtEur(n) {
+  var a = Math.abs(Math.round(n));
+  var s = n >= 0 ? '+' : '\u2212';
+  if (a >= 1000000) return s + '\u20AC\u00A0' + (a / 1e6).toFixed(2).replace('.', ',') + '\u00A0mln';
+  return s + '\u20AC\u00A0' + a.toLocaleString('nl-NL');
+}
+
+// ── CALCULATE ──────────────────────────────────────────────
+function doCalc() {
+  // Financial params
+  var bvo   = getVal('q_bvo') || 3000;
+  var capex = getVal('q_capex') || 2500000;
+  var dPct  = (getVal('q_dcapex') || 4) / 100;
+  var disc  = (getVal('q_disc') || 5) / 100;
+  var k20   = (getVal('q_k20') || 30) / 100;
+  var k35   = (getVal('q_k35') || 60) / 100;
+  var slp   = getVal('q_slp') || 25;
+  var hbw   = getVal('q_hbw') || 300;
+  var pnaam = document.getElementById('q_pnaam').value || 'Naamloos project';
+
+  // D1 — Constructieve flexibiliteit
+  var kv = getVal('q_kolom') || 1000;
+  var ks = kv >= 2500 ? 5 : kv >= 2000 ? 4 : kv >= 1500 ? 3 : kv >= 1000 ? 2 : 1;
+  var hoogte    = getInt('q_hoogte') || 3;
+  var belasting = getInt('q_belasting') || 3;
+  var d1raw = (ks + hoogte + belasting) / 3;
+
+  // D2 — Ontkoppelbaarheid
+  var ontkScore   = getInt('q_ontk') || 3;
+  var schScore    = getInt('q_sch') || 2;
+  var vloerScore  = getRadio('vloer', 4);
+  var d2raw = (ontkScore + schScore + vloerScore) / 3;
+
+  // D3 — Materiaaldocumentatie
+  var docP    = getInt('q_doc') || 30;
+  var docSc   = docP >= 80 ? 5 : docP >= 60 ? 4 : docP >= 40 ? 3 : docP >= 20 ? 2 : 1;
+  var mppSc   = getRadio('mpp', 1);
+  var verbSc  = getInt('q_verb') || 2;
+  var d3raw = (docSc + mppSc + verbSc) / 3;
+
+  // D4 — Herbestemming
+  var hbSc  = getRadio('hb', 1);
+  var gvSc  = getRadio('gvl', 4);
+  var loSc  = getRadio('loc', 3);
+  var d4raw = (hbSc + gvSc + loSc) / 3;
+
+  // Weighted total → max 20
+  var totalRaw = d1raw * 0.30 + d2raw * 0.30 + d3raw * 0.20 + d4raw * 0.20;
+  var total    = Math.min(20, Math.round(totalRaw * 4));
+  var d1sc = Math.round(d1raw * 4);
+  var d2sc = Math.round(d2raw * 4);
+  var d3sc = Math.round(d3raw * 4);
+  var d4sc = Math.round(d4raw * 4);
+
+  // EoL class
+  var cls, head, lead;
+  if (total >= 16) {
+    cls = 'a'; head = 'Hoge toekomstwaarde';
+    lead = 'Dit project scoort sterk op adaptiviteit en toekomstbestendigheid. Met beperkte aanpassingen is een robuust EoL-scenario realiseerbaar.';
+  } else if (total >= 11) {
+    cls = 'b'; head = 'Gemiddeld toekomstpotentieel';
+    lead = 'Gerichte ontwerpinterventies zijn aanbevolen om de residuwaarde structureel te verhogen.';
+  } else {
+    cls = 'c'; head = 'Beperkt toekomstpotentieel';
+    lead = 'Dit project heeft significante EoL-risico\'s. De business case voor aanpassingen nu is financieel sterk.';
+  }
+
+  // NRV
+  var deltaC = capex * dPct;
+  var dvs    = hbw + slp;
+  var nrv20  = (k20 * dvs * bvo) - (deltaC * Math.pow(1 + disc, 20));
+  var nrv35  = (k35 * dvs * bvo) - (deltaC * Math.pow(1 + disc, 35));
+
+  showResults({
+    cls: cls, head: head, lead: lead, total: total,
+    d1sc: d1sc, d2sc: d2sc, d3sc: d3sc, d4sc: d4sc,
+    nrv20: nrv20, nrv35: nrv35,
+    bvo: bvo, deltaC: deltaC, k20: k20, k35: k35, pnaam: pnaam,
+    sc: {
+      ks: ks, ontkScore: ontkScore, verbSc: verbSc,
+      hbSc: hbSc, docP: docP
+    }
+  });
+}
+
+// ── RENDER RESULTS ─────────────────────────────────────────
+function showResults(r) {
+  document.getElementById('scan-body').style.display  = 'none';
+  document.getElementById('step-bar').classList.remove('show');
+  document.getElementById('result-body').style.display = 'block';
+
+  // Glyph
+  var g = document.getElementById('egl');
+  g.className = 'eol-glyph c-' + r.cls;
+  document.getElementById('egl-l').textContent = r.cls.toUpperCase();
+  document.getElementById('r-meta').textContent =
+    r.pnaam + ' \u00B7 ' + new Date().toLocaleDateString('nl-NL', { year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('r-head').textContent = r.head;
+  document.getElementById('r-lead').textContent = r.lead;
+
+  // KPI strip
+  var tc = r.cls === 'a' ? '#2a7a4a' : r.cls === 'b' ? '#1a4b8c' : '#b84a00';
+  document.getElementById('kpi-strip').innerHTML =
+    '<div class="kpi-c dark"><div class="k-lbl">EoL-klasse</div><div class="k-val">' + r.cls.toUpperCase() + '</div><div class="k-sub">A\u00A0(best)\u00A0—\u00A0C</div></div>' +
+    '<div class="kpi-c"><div class="k-lbl">Totaalscore</div><div class="k-val" style="color:' + tc + '">' + r.total + '<span style="font-size:15px;color:#9898a8"> / 20</span></div><div class="k-sub">gewogen, alle dimensies</div></div>' +
+    '<div class="kpi-c"><div class="k-lbl">NRV T\u202020 jr</div><div class="k-val" style="font-size:20px;color:' + (r.nrv20 >= 0 ? '#2a7a4a' : '#b84a00') + '">' + fmtEur(r.nrv20) + '</div><div class="k-sub">' + Math.round(r.nrv20 / r.bvo) + ' \u20AC/m\u00B2 BVO</div></div>' +
+    '<div class="kpi-c"><div class="k-lbl">NRV T\u202035 jr</div><div class="k-val" style="font-size:20px;color:' + (r.nrv35 >= 0 ? '#2a7a4a' : '#b84a00') + '">' + fmtEur(r.nrv35) + '</div><div class="k-sub">' + Math.round(r.nrv35 / r.bvo) + ' \u20AC/m\u00B2 BVO</div></div>';
+
+  // Score table
+  var dc = ['#1a4b8c', '#1a6ba8', '#2a7a4a', '#1a8a82'];
+  var rows = [
+    ['D1', 'Constructieve flexibiliteit', '30%', r.d1sc, dc[0]],
+    ['D2', 'Ontkoppelbaarheid',           '30%', r.d2sc, dc[1]],
+    ['D3', 'Materiaaldocumentatie',        '20%', r.d3sc, dc[2]],
+    ['D4', 'Herbestemmingspotentie',       '20%', r.d4sc, dc[3]]
+  ];
+  var html = rows.map(function(row) {
+    var p = (row[3] / 20) * 100;
+    return '<tr><td class="td-d">' + row[0] + ' \u2014 ' + row[1] + '</td>' +
+           '<td class="td-w">' + row[2] + '</td>' +
+           '<td class="td-s" style="color:' + row[4] + '">' + row[3] + ' / 20</td>' +
+           '<td><div class="bar-w"><div class="bar-bg"><div class="bar-f" style="width:' + p + '%;background:' + row[4] + '"></div></div></div></td></tr>';
+  }).join('');
+  var tp = (r.total / 20) * 100;
+  html += '<tr style="background:#f8f8f6;font-weight:700">' +
+          '<td class="td-d" style="color:' + tc + '">Totaal (gewogen)</td>' +
+          '<td class="td-w">100%</td>' +
+          '<td class="td-s" style="color:' + tc + ';font-size:15px">' + r.total + ' / 20</td>' +
+          '<td><div class="bar-w"><div class="bar-bg"><div class="bar-f" style="width:' + tp + '%;background:' + tc + '"></div></div></div></td></tr>';
+  document.getElementById('s-tbody').innerHTML = html;
+
+  // NRV
+  document.getElementById('nrv20').textContent = fmtEur(r.nrv20);
+  document.getElementById('nrv20d').textContent =
+    (r.k20 * 100).toFixed(0) + '% herbestemmingskans \u00B7 CAPEX-delta ' + fmtEur(r.deltaC).replace('+', '');
+  var n35el = document.getElementById('nrv35');
+  n35el.className = 'nrv-fig ' + (r.nrv35 >= 0 ? 'pos' : 'neg');
+  n35el.textContent = fmtEur(r.nrv35);
+  document.getElementById('nrv35d').textContent =
+    (r.k35 * 100).toFixed(0) + '% herbestemmingskans \u00B7 ' + Math.round(r.nrv35 / r.bvo) + ' \u20AC/m\u00B2 BVO';
+
+  // Advice
+  document.getElementById('adv-cont').innerHTML = buildAdvice(r).map(function(a) {
+    return '<div class="adv-card"><div class="adv-head"><span class="adv-tag ' + a.t + '">' + a.tl + '</span><span class="adv-ttl">' + a.ti + '</span></div><div class="adv-body">' + a.b + '</div></div>';
+  }).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Animate bars
+  setTimeout(function() {
+    document.querySelectorAll('.bar-f').forEach(function(el) {
+      var w = el.style.width;
+      el.style.width = '0%';
+      requestAnimationFrame(function() {
+        setTimeout(function() { el.style.width = w; }, 20);
+      });
+    });
+  }, 120);
+}
+
+// ── ADVICE ─────────────────────────────────────────────────
+function buildAdvice(r) {
+  var a = [];
+  if (r.sc.ks <= 2)
+    a.push({ t:'warn', tl:'Aandachtspunt', ti:'Kolomraster',
+      b:'Het kolomraster biedt beperkte flexibiliteit voor herindeling. Vergroting naar \u22651.500\u00A0m\u00B2/kolom verhoogt de herbestemmingspotentie aanzienlijk. Typische CAPEX-delta: \u20AC30\u201380/m\u00B2\u00A0BVO \u2014 terugverdiend bij \xe9\xe9n herbestemmingsscenario.' });
+  else
+    a.push({ t:'pos', tl:'Goed', ti:'Kolomraster',
+      b:'Het kolomraster scoort adequaat. Documenteer de exacte overspanningsgegevens inclusief maximale belastingscapaciteit in het constructief eindrapport voor toekomstige financiering en taxatie.' });
+
+  if (r.sc.ontkScore <= 2)
+    a.push({ t:'warn', tl:'Aandachtspunt', ti:'Ontkoppelbaarheid installaties',
+      b:'Installaties zijn sterk verweven met de draagstructuur. Introduceer ontkoppelingslagen: installatieschachten per zone, verhoogde vloeren of prefab gevelelementen. De besparing bij vervanging over 15\u201320 jaar is substantieel.' });
+
+  if (r.sc.verbSc <= 2)
+    a.push({ t:'warn', tl:'Aandachtspunt', ti:'Verbindingstechnieken',
+      b:'Monolithische verbindingen reduceren de circulaire restwaarde significant. Overweeg geschroefde flensverbindingen (HV-bouten, NEN-EN\u00A01090\u00A0EXC2) of droge verbindingen bij prefab-elementen.' });
+
+  if (r.sc.docP < 60)
+    a.push({ t:'info', tl:'Advies', ti:'Materiaaldocumentatie',
+      b:'Vastlegging van materiaalkwaliteiten en profieltypes kost minimale extra inspanning maar levert substantieel voordeel op bij circulariteitsaudits, MIA/Vamil-aanvragen en Madaster-integratie.' });
+
+  if (r.sc.hbSc <= 2)
+    a.push({ t:'info', tl:'Advies', ti:'Herbestemmingspotentie',
+      b:'Het aantal haalbare alternatieve bestemmingen is laag. Een korte scenariostudie met 2\u20133 toekomstige bestemmingen geeft inzicht in welke constructieve keuzes nu minimale meerkosten vergen maar maximale flexibiliteit bieden.' });
+
+  if (r.nrv20 > 0)
+    a.push({ t:'pos', tl:'Positief', ti:'NRV positief op T=20 jaar',
+      b:'De NRV-analyse toont een positief saldo van ' + fmtEur(r.nrv20) + ' op T=20 jaar (' + Math.round(r.nrv20 / r.bvo) + '\u00A0\u20AC/m\u00B2 BVO). Dit argument is direct inzetbaar richting financier, vastgoedbelegger of ESG-rapportage.' });
+  else
+    a.push({ t:'warn', tl:'Let op', ti:'NRV negatief op T=20 jaar',
+      b:'Op T=20 jaar: ' + fmtEur(r.nrv20) + '; op T=35 jaar: ' + fmtEur(r.nrv35) + '. Presenteer dit als verzekeringspremie voor functieverliesrisico. Verhoog herbestemmingskans of verlaag CAPEX-delta om omslagpunt eerder te bereiken.' });
+
+  return a;
+}
+</script>
+
+</body>
+</html>
